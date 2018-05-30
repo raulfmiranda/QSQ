@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.util.Log
+import android.view.Window
+import android.view.WindowManager
 import android.widget.RadioButton
 import android.widget.Toast
 import br.edu.faculdadepaulopicanco.traumadeface.model.Pesquisa
@@ -21,8 +23,9 @@ class FormActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_form)
 
+        supportActionBar?.title = "Questionário"
+
         carregaQuestaoNaTela(questionarioAtual.questoes[0])
-        questionarioAtual.status = 0
 
         btnProx.setOnClickListener {
             val rdId = radioGroup.checkedRadioButtonId
@@ -64,11 +67,10 @@ class FormActivity : AppCompatActivity() {
                 if(s < questoesSize - 1) {
                     s = ++questionarioAtual.status
                     carregaQuestaoNaTela(questionarioAtual.questoes[s])
-                    // TODO: Dá erro quando vai começar a responder o novo questionário
                 }
                 else {
+                    btnProx.isClickable = false
                     pesquisa.questionarios.add(questionarioAtual)
-                    questionarioAtual = criarNovoQuestionario()
                     showEndAlert()
                 }
             }
@@ -102,16 +104,23 @@ class FormActivity : AppCompatActivity() {
         builder.setMessage("Deseja realizar novo questionário ou finalizar a pesquisa?")
 
         builder.setPositiveButton("Finalizar Pesquisa") {dialog, which ->
-            Toast.makeText(this, "Pesquisa Finalizada", Toast.LENGTH_SHORT).show()
             val intent = Intent(context, PesquisaActivity::class.java)
             intent.putExtra(PesquisaActivity.EXTRA_PESQUISA, pesquisa)
             startActivity(intent)
         }
         builder.setNegativeButton("Novo Questionário") {dialog, which ->
             Toast.makeText(this, "Novo Questionário Gerado", Toast.LENGTH_SHORT).show()
+            btnProx.isClickable = true
+            questionarioAtual = criarNovoQuestionario()
             carregaQuestaoNaTela(questionarioAtual.questoes[0])
         }
-        builder.create().show()
+        val dialog = builder.create()
+        var window = dialog.window
+        window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL)
+        window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+
+        dialog.show()
     }
 
     // TODO: criaNovoQuestionario
@@ -157,7 +166,7 @@ class FormActivity : AppCompatActivity() {
         val q8 = Questao("", r8, -1)
 
 
-        return Questionario(-1, mutableListOf<Questao>(q0, q1, q2, q3, q4, q5))
+        return Questionario(0, mutableListOf<Questao>(q0, q1, q2, q3, q4, q5))
     }
 
 }
