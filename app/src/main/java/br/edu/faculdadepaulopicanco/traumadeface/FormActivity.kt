@@ -64,6 +64,7 @@ class FormActivity : AppCompatActivity() {
                 if(s < questoesSize - 1) {
                     s = ++questionarioAtual.status
                     carregaQuestaoNaTela(questionarioAtual.questoes[s])
+                    // TODO: Dá erro quando vai começar a responder o novo questionário
                 }
                 else {
                     pesquisa.questionarios.add(questionarioAtual)
@@ -95,15 +96,20 @@ class FormActivity : AppCompatActivity() {
     }
 
     fun showEndAlert() {
-        val builder = AlertDialog.Builder(this@FormActivity)
+        val context = this@FormActivity
+        val builder = AlertDialog.Builder(context)
         builder.setTitle("Questionário Finalizado")
         builder.setMessage("Deseja realizar novo questionário ou finalizar a pesquisa?")
 
         builder.setPositiveButton("Finalizar Pesquisa") {dialog, which ->
             Toast.makeText(this, "Pesquisa Finalizada", Toast.LENGTH_SHORT).show()
+            val intent = Intent(context, PesquisaActivity::class.java)
+            intent.putExtra(PesquisaActivity.EXTRA_PESQUISA, pesquisa)
+            startActivity(intent)
         }
         builder.setNegativeButton("Novo Questionário") {dialog, which ->
             Toast.makeText(this, "Novo Questionário Gerado", Toast.LENGTH_SHORT).show()
+            carregaQuestaoNaTela(questionarioAtual.questoes[0])
         }
         builder.create().show()
     }
