@@ -1,3 +1,44 @@
 <resources>
     <string name="app_name">Trauma de Face</string>
+    <string name="indiceUltimaQuestao">5</string>
+
+    <string name="q0">Faixa etária</string>
+    <string name="q0r0">0 a 10</string>
+    <string name="q0r1">11 a 20</string>
+    <string name="q0r2">21 a 30</string>
+    <string name="q0r3">31 a 40</string>
+    <string name="q0r4">41 a 50</string>
+    <string name="q0r5">51 a 60</string>
+    <string name="q0r6">maior que 60</string>
+
+    <string name="q1">Sexo</string>
+    <string name="q1r0">masculino</string>
+    <string name="q1r1">feminino</string>
+
+    <string name="q2">Estado civil</string>
+    <string name="q2r0">solteiro</string>
+    <string name="q2r1">casado</string>
+    <string name="q2r2">união estável</string>
+    <string name="q2r3">viúvo</string>
+    <string name="q2r4">divorciado</string>
+
+    <string name="q3">Local da ocorrência</string>
+    <string name="q3r0">capital e região metropolitana</string>
+    <string name="q3r1">interior</string>
+
+    <string name="q4">Vínculo empregatício</string>
+    <string name="q4r0">trabalhador assalariado</string>
+    <string name="q4r1">trabalhador autônomo</string>
+    <string name="q4r2">desempregado</string>
+    <string name="q4r3">aposentado</string>
+    <string name="q4r4">não trabalha</string>
+
+    <string name="q5">Escolaridade</string>
+    <string name="q5r0">analfabeto</string>
+    <string name="q5r1">ensino fundamental incompleto</string>
+    <string name="q5r2">ensino fundamental completo</string>
+    <string name="q5r3">ensino médio incompleto</string>
+    <string name="q5r4">ensino médio completo</string>
+    <string name="q5r5">ensino superior completo</string>
+    <string name="q5r6">ensino superior incompleto</string>
 </resources>
