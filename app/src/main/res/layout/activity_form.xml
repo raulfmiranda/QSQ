@@ -16,6 +16,7 @@
         android:text="Faixa etária"
         android:textSize="@dimen/text_size_pergunta"
         android:textStyle="bold"
+        android:padding="10dp"
         android:background="@color/colorLightBlue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

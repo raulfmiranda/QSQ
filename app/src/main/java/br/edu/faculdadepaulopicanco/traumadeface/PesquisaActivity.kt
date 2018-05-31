@@ -21,10 +21,14 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import android.content.Intent
+import android.graphics.Canvas
 import android.net.Uri
 import android.os.Environment
 import android.os.Environment.DIRECTORY_DOWNLOADS
 import android.os.Environment.getExternalStoragePublicDirectory
+import android.text.Layout
+import android.text.StaticLayout
+import android.text.TextPaint
 import android.text.method.ScrollingMovementMethod
 import br.edu.faculdadepaulopicanco.traumadeface.model.QuestaoContadora
 import br.edu.faculdadepaulopicanco.traumadeface.model.QuestionarioContador
@@ -108,12 +112,50 @@ class PesquisaActivity : AppCompatActivity() {
 //        canvas.drawCircle(200f, 200f, 100f, paint)
 //        document.finishPage(page)
 
-        // Create Page 3
-        var pageInfo = PdfDocument.PageInfo.Builder(1000, 2000, 1).create()
-        var page = document.startPage(pageInfo)
-        var content = txtResumo
-        content.draw(page.canvas)
-        document.finishPage(page)
+        // Create Page A4 size
+        val widthA4 = 595
+        val heightA4 = 842
+        var pagesInfo = mutableListOf<PdfDocument.PageInfo>()
+        var pageInfo0 = PdfDocument.PageInfo.Builder(widthA4, heightA4, 1).create()
+        var pageInfo1 = PdfDocument.PageInfo.Builder(widthA4, heightA4, 2).create()
+        var pageInfo2 = PdfDocument.PageInfo.Builder(widthA4, heightA4, 3).create()
+        pagesInfo.add(pageInfo0)
+        pagesInfo.add(pageInfo1)
+        pagesInfo.add(pageInfo2)
+
+        var textPaint = TextPaint()
+        textPaint.isAntiAlias = true
+        textPaint.textSize = 12 * resources.displayMetrics.density
+        textPaint.color = Color.BLACK
+
+        var lines = txtResumo.text.toString().lines()
+        var i = 0
+
+        for (pgInf in pagesInfo) {
+            var page = document.startPage(pgInf)
+            var canvas = page.canvas
+            val paint = Paint()
+            paint.color = Color.WHITE
+            paint.style = Paint.Style.FILL
+            canvas.drawPaint(paint)
+
+            paint.color = Color.BLACK
+            paint.textSize = 14f
+
+            while(i < lines.size) {
+                if(i > 32 * pgInf.pageNumber) {
+                    break
+                }
+                else {
+                    var staticLayout = StaticLayout(lines[i], textPaint, canvas.width, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0f, false)
+                    canvas.save()
+                    canvas.translate(0f, 30f)
+                    staticLayout.draw(canvas)
+                    i++
+                }
+            }
+            document.finishPage(page)
+        }
 
         // write the document content
         val targetPdf = "/sdcard/test.pdf"
