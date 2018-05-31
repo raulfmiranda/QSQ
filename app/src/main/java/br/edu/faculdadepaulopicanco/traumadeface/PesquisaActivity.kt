@@ -28,6 +28,7 @@ import android.os.Environment.getExternalStoragePublicDirectory
 import android.text.method.ScrollingMovementMethod
 import br.edu.faculdadepaulopicanco.traumadeface.model.QuestaoContadora
 import br.edu.faculdadepaulopicanco.traumadeface.model.QuestionarioContador
+import org.jetbrains.anko.share
 
 
 class PesquisaActivity : AppCompatActivity() {
@@ -43,49 +44,46 @@ class PesquisaActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pesquisa)
 
-        supportActionBar?.title = "Resumo"
+        val titulo = "Dados Estatísticos da Pesquisa"
+        supportActionBar?.title = titulo
 
         pesquisa = intent.extras.get(EXTRA_PESQUISA) as Pesquisa
+
+        txtResumo.movementMethod = ScrollingMovementMethod()
+        txtResumo.text = gerarRelatorio()
+
+        btnGerarRelatorio.setOnClickListener {
+            verificarPermissao()
+        }
+
+        btnCompartilhar.setOnClickListener {
+            share(txtResumo.text.toString(), titulo)
+        }
+    }
+
+    fun gerarRelatorio():String {
+
         val qtdQuestionarios = pesquisa.questionarios.size
         val qtdQuestPorQuestionario = pesquisa.questionarios[0].questoes.size
         val qtdTotalQuest = qtdQuestionarios * qtdQuestPorQuestionario
         var resumo = "Quantidade de questionários: $qtdQuestionarios\nQuantidade de questões por questionário: $qtdQuestPorQuestionario\nQuantidade total de questões: $qtdTotalQuest"
 
-
         var questoesContadoras = pesquisa.questionarioContador.questoesContadoras
 
-        try {
-            for(qc in questoesContadoras) {
-                val perg = qc.pergunta
-                resumo = resumo + "\n\n$perg"
-                for(resp in qc.respostasContadoras) {
-                    val key = resp.key
-                    if(!key.isNullOrBlank()) {
-                        val value = resp.value
-                        resumo = resumo + "\n$key( $value )"
-                    }
+        for(qc in questoesContadoras) {
+            val perg = qc.pergunta
+            resumo = resumo + "\n\n # $perg\n"
+            for(resp in qc.respostasContadoras) {
+                val key = resp.key
+                if(!key.isNullOrBlank()) {
+                    val value = resp.value
+                    var perc = (value.toDouble() / qtdQuestionarios.toDouble()) * 100
+                    var percFormat = "%.1f".format(perc)
+                    resumo = resumo + "\n$key ($percFormat%)"
                 }
             }
         }
-        catch (e: Exception) {
-            val erro = e.message
-            Log.d("traumadeface", erro)
-        }
-
-
-        txtResumo.movementMethod = ScrollingMovementMethod()
-        txtResumo.text = resumo
-
-        var respostasEscolhidas = mutableListOf<Int>()
-        for (questionario in pesquisa.questionarios) {
-            for(questao in questionario.questoes) {
-                respostasEscolhidas.add(questao.respostaEscolhida)
-            }
-        }
-
-        btnGerarRelatorio.setOnClickListener {
-            verificarPermissao()
-        }
+        return resumo
     }
 
     fun gerarPdf() {

@@ -22,7 +22,7 @@ class FormActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_form)
 
-        supportActionBar?.title = "Questionário"
+        supportActionBar?.title = "Questionário da Pesquisa"
 
         carregaQuestaoNaTela(questionarioAtual.questoes[0])
 
