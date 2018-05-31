@@ -25,12 +25,14 @@ import android.net.Uri
 import android.os.Environment
 import android.os.Environment.DIRECTORY_DOWNLOADS
 import android.os.Environment.getExternalStoragePublicDirectory
-
+import android.text.method.ScrollingMovementMethod
+import br.edu.faculdadepaulopicanco.traumadeface.model.QuestaoContadora
+import br.edu.faculdadepaulopicanco.traumadeface.model.QuestionarioContador
 
 
 class PesquisaActivity : AppCompatActivity() {
 
-    var pesquisa: Pesquisa = Pesquisa(mutableListOf<Questionario>())
+    var pesquisa: Pesquisa = Pesquisa(mutableListOf<Questionario>(), QuestionarioContador(mutableListOf<QuestaoContadora>()))
     val WRITE_EXTERNAL_STORAGE_CODE = 1
 
     companion object {
@@ -47,8 +49,39 @@ class PesquisaActivity : AppCompatActivity() {
         val qtdQuestionarios = pesquisa.questionarios.size
         val qtdQuestPorQuestionario = pesquisa.questionarios[0].questoes.size
         val qtdTotalQuest = qtdQuestionarios * qtdQuestPorQuestionario
-        val resumo = "Quantidade de questionários: $qtdQuestionarios\nQuantidade de questões por questionário: $qtdQuestPorQuestionario\nQuantidade total de questões: $qtdTotalQuest"
+        var resumo = "Quantidade de questionários: $qtdQuestionarios\nQuantidade de questões por questionário: $qtdQuestPorQuestionario\nQuantidade total de questões: $qtdTotalQuest"
+
+
+        var questoesContadoras = pesquisa.questionarioContador.questoesContadoras
+
+        try {
+            for(qc in questoesContadoras) {
+                val perg = qc.pergunta
+                resumo = resumo + "\n\n$perg"
+                for(resp in qc.respostasContadoras) {
+                    val key = resp.key
+                    if(!key.isNullOrBlank()) {
+                        val value = resp.value
+                        resumo = resumo + "\n$key( $value )"
+                    }
+                }
+            }
+        }
+        catch (e: Exception) {
+            val erro = e.message
+            Log.d("traumadeface", erro)
+        }
+
+
+        txtResumo.movementMethod = ScrollingMovementMethod()
         txtResumo.text = resumo
+
+        var respostasEscolhidas = mutableListOf<Int>()
+        for (questionario in pesquisa.questionarios) {
+            for(questao in questionario.questoes) {
+                respostasEscolhidas.add(questao.respostaEscolhida)
+            }
+        }
 
         btnGerarRelatorio.setOnClickListener {
             verificarPermissao()
@@ -57,23 +90,31 @@ class PesquisaActivity : AppCompatActivity() {
 
     fun gerarPdf() {
         var document = PdfDocument()
-        var pageInfo = PdfDocument.PageInfo.Builder(100, 100, 1).create()
+//        var pageInfo = PdfDocument.PageInfo.Builder(100, 100, 1).create()
 
         // Start a page
-        var page = document.startPage(pageInfo)
-        var canvas = page.canvas
-        var paint = Paint()
-        paint.color = Color.RED
-        canvas.drawCircle(50f, 50f, 30f, paint)
-        document.finishPage(page)
+
+//        var page = document.startPage(pageInfo)
+//        var canvas = page.canvas
+//        var paint = Paint()
+//        paint.color = Color.RED
+//        canvas.drawCircle(50f, 50f, 30f, paint)
+//        document.finishPage(page)
 
         // Create Page 2
-        pageInfo = PdfDocument.PageInfo.Builder(500, 500, 2).create()
-        page = document.startPage(pageInfo)
-        canvas = page.canvas
-        paint = Paint()
-        paint.color = Color.BLUE
-        canvas.drawCircle(200f, 200f, 100f, paint)
+//        pageInfo = PdfDocument.PageInfo.Builder(500, 500, 2).create()
+//        page = document.startPage(pageInfo)
+//        canvas = page.canvas
+//        paint = Paint()
+//        paint.color = Color.BLUE
+//        canvas.drawCircle(200f, 200f, 100f, paint)
+//        document.finishPage(page)
+
+        // Create Page 3
+        var pageInfo = PdfDocument.PageInfo.Builder(1000, 2000, 1).create()
+        var page = document.startPage(pageInfo)
+        var content = txtResumo
+        content.draw(page.canvas)
         document.finishPage(page)
 
         // write the document content

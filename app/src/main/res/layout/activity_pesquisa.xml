@@ -9,10 +9,12 @@
     <TextView
         android:id="@+id/txtResumo"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="300dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
+        android:maxLines="15"
+        android:scrollbars="vertical"
         android:text="Quantidade de questionários: N\n\nQuantidade de questões por pesquisa: N\n\nQuantidade total de questões: N"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
