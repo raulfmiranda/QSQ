@@ -23,6 +23,7 @@ import java.io.IOException
 import android.content.Intent
 import android.graphics.Canvas
 import android.net.Uri
+import android.os.Build
 import android.os.Environment
 import android.os.Environment.DIRECTORY_DOWNLOADS
 import android.os.Environment.getExternalStoragePublicDirectory
@@ -32,13 +33,14 @@ import android.text.TextPaint
 import android.text.method.ScrollingMovementMethod
 import br.edu.faculdadepaulopicanco.traumadeface.model.QuestaoContadora
 import br.edu.faculdadepaulopicanco.traumadeface.model.QuestionarioContador
-import org.jetbrains.anko.share
+import org.jetbrains.anko.*
 
 
 class PesquisaActivity : AppCompatActivity() {
 
     var pesquisa: Pesquisa = Pesquisa(mutableListOf<Questionario>(), QuestionarioContador(mutableListOf<QuestaoContadora>()))
     val WRITE_EXTERNAL_STORAGE_CODE = 1
+    val relatorioPath = "/sdcard/TraumaDeFaceRel.pdf"
 
     companion object {
         val EXTRA_PESQUISA = "PESQUISA"
@@ -83,7 +85,7 @@ class PesquisaActivity : AppCompatActivity() {
                     val value = resp.value
                     var perc = (value.toDouble() / qtdQuestionarios.toDouble()) * 100
                     var percFormat = "%.1f".format(perc)
-                    resumo = resumo + "\n$key ($percFormat%)"
+                    resumo = resumo + "\n · $key ($percFormat%)"
                 }
             }
         }
@@ -116,12 +118,9 @@ class PesquisaActivity : AppCompatActivity() {
         val widthA4 = 595
         val heightA4 = 842
         var pagesInfo = mutableListOf<PdfDocument.PageInfo>()
-        var pageInfo0 = PdfDocument.PageInfo.Builder(widthA4, heightA4, 1).create()
-        var pageInfo1 = PdfDocument.PageInfo.Builder(widthA4, heightA4, 2).create()
-        var pageInfo2 = PdfDocument.PageInfo.Builder(widthA4, heightA4, 3).create()
-        pagesInfo.add(pageInfo0)
-        pagesInfo.add(pageInfo1)
-        pagesInfo.add(pageInfo2)
+        for (i in 1..11) {
+            pagesInfo.add(PdfDocument.PageInfo.Builder(widthA4, heightA4, i).create())
+        }
 
         var textPaint = TextPaint()
         textPaint.isAntiAlias = true
@@ -143,11 +142,11 @@ class PesquisaActivity : AppCompatActivity() {
             paint.textSize = 14f
 
             while(i < lines.size) {
-                if(i > 32 * pgInf.pageNumber) {
+                if(i > 25 * pgInf.pageNumber) {
                     break
                 }
                 else {
-                    var staticLayout = StaticLayout(lines[i], textPaint, canvas.width, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0f, false)
+                    var staticLayout = StaticLayout(lines[i], textPaint, canvas.width, Layout.Alignment.ALIGN_NORMAL, 0.8f, 0f, false)
                     canvas.save()
                     canvas.translate(0f, 30f)
                     staticLayout.draw(canvas)
@@ -158,7 +157,7 @@ class PesquisaActivity : AppCompatActivity() {
         }
 
         // write the document content
-        val targetPdf = "/sdcard/test.pdf"
+        val targetPdf = relatorioPath
         val filePath = File(targetPdf)
         try {
             document.writeTo(FileOutputStream(filePath))
@@ -208,7 +207,7 @@ class PesquisaActivity : AppCompatActivity() {
         try {
 //            val file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS + "/Documents/" + fileName)
 //            val file = Environment.getExternalStoragePublicDirectory("/sdcard/test.pdf")
-            val targetPdf = "/sdcard/test.pdf"
+            val targetPdf = relatorioPath
             val file = File(targetPdf)
             val intent = Intent("com.adobe.reader")
             intent.type = "application/pdf"
@@ -226,7 +225,31 @@ class PesquisaActivity : AppCompatActivity() {
 //        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             WRITE_EXTERNAL_STORAGE_CODE -> gerarPdf()
-            else -> Log.d("traumadeface", "Usuario nao aceitou persmissao?")
+            else -> {
+                Log.d("traumadeface", "Usuario nao aceitou permissao?")
+                toast("Não foi possível gerar o PDF. É necessário permitir o acesso.")
+            }
         }
+    }
+
+    override fun onBackPressed() {
+//        super.onBackPressed()
+        alert("Deseja fechar o aplicativo?") {
+            positiveButton("Sim") {
+                finishAffinity()
+//                moveTaskToBack(true)
+//                android.os.Process.killProcess(android.os.Process.myPid())
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                    finishAndRemoveTask()
+//                }
+//                else {
+//                    android.os.Process.killProcess(android.os.Process.myPid())
+//                    moveTaskToBack(true)
+//                }
+            }
+            negativeButton("Não") {
+
+            }
+        }.show()
     }
 }

@@ -20,7 +20,7 @@
         android:fontFamily="sans-serif-smallcaps"
         android:gravity="center"
         android:padding="10dp"
-        android:text="GERADOR ESTATÍSTICO\n DE\n TRAUMA DE FACE"
+        android:text="GERADOR ESTATÍSTICO\nDE\nTRAUMA DE FACE"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
