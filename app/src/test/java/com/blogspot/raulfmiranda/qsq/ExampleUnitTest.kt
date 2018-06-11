@@ -1,4 +1,4 @@
-package br.edu.faculdadepaulopicanco.traumadeface
+package com.blogspot.raulfmiranda.qsq
 
 import org.junit.Test
 

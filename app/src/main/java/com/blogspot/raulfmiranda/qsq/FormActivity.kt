@@ -1,16 +1,15 @@
-package br.edu.faculdadepaulopicanco.traumadeface
+package com.blogspot.raulfmiranda.qsq
 
 import android.content.Intent
-import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.util.Log
-import android.view.Window
 import android.view.WindowManager
 import android.widget.RadioButton
 import android.widget.Toast
-import br.edu.faculdadepaulopicanco.traumadeface.model.*
+import com.blogspot.raulfmiranda.qsq.R
+import com.blogspot.raulfmiranda.qsq.model.*
 import kotlinx.android.synthetic.main.activity_form.*
 import org.jetbrains.anko.alert
 

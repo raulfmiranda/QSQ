@@ -1,4 +1,4 @@
-package br.edu.faculdadepaulopicanco.traumadeface.model
+package com.blogspot.raulfmiranda.qsq.model
 
 import java.io.Serializable
 
