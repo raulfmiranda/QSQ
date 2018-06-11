@@ -4,6 +4,7 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
+import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.WindowManager
 import android.widget.RadioButton
@@ -23,7 +24,8 @@ class FormActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_form)
 
-        supportActionBar?.title = "Questionário da Pesquisa"
+        txtPergunta.movementMethod = ScrollingMovementMethod()
+//        supportActionBar?.title = "Questionário de Saúde e Quedas"
 
         carregaQuestaoNaTela(questionarioAtual.questoes[0])
 
@@ -116,7 +118,7 @@ class FormActivity : AppCompatActivity() {
                 else {
                     btnProx.isClickable = false
                     pesquisa.questionarios.add(questionarioAtual)
-                    showEndAlert()
+//                    showEndAlert()
                 }
             }
             else {
@@ -172,133 +174,109 @@ class FormActivity : AppCompatActivity() {
     fun criarNovoQuestionario(): Questionario {
         val nsa = "não se aplica"
 
-        var r0 = mutableListOf("0 a 10", "11 a 20", "21 a 30", "31 a 40", "41 a 50", "51 a 60", "maior que 60", "", "")
-        val q0 = Questao("Faixa etária", r0, -1)
+        var r0 = mutableListOf("Muito má", "Má", "Razoável", "Boa", "Excelente", "", "", "", "")
+        val q0 = Questao("1. Estado de Saúde Geral\n1.1. Considera que, actualmente, a sua saúde é:", r0, -1)
 
-        var r1 = mutableListOf("masculino", "feminino", "", "", "", "", "", "", "")
-        val q1 = Questao("Sexo", r1, -1)
+        var r1 = mutableListOf("Muito má", "Má", "Razoável", "Boa", "Excelente", "", "", "", "")
+        val q1 = Questao("1.1. Actualmente diria que a sua visão, usando ambos os olhos (com óculos ou lentes de contacto, se os utilizar) é:", r1, -1)
 
-        var r2 = mutableListOf("solteiro", "casado", "união estável", "viúvo", "divorciado", "", "", "", "")
-        val q2 = Questao("Estado civil", r2, -1)
+        var r2 = mutableListOf("Não", "Sim", "", "", "", "", "", "", "")
+        val q2 = Questao("1.2. Usa lentes bifocais?", r2, -1)
 
-        var r3 = mutableListOf("capital e região metropolitana", "interior", "", "", "", "", "", "", "")
-        val q3 = Questao("Local da ocorrência", r3, -1)
+        var r3 = mutableListOf("Muito má", "Má", "Razoável", "Boa", "Excelente", "", "", "", "")
+        val q3 = Questao("1.3. Considera que, actualmente, a sua audição (com aparelho auditivo, se o utilizar) é", r3, -1)
 
-        var r4 = mutableListOf(
-                "trabalhador assalariado",
-                "trabalhador autônomo",
-                "desempregado",
-                "aposentado",
-                "não trabalha", "", "", "", "")
-        val q4 = Questao("Vínculo empregatício", r4, -1)
+        var r4 = mutableListOf("Não", "Sim", "", "", "", "", "", "", "")
+        val q4 = Questao("1.4. Foi sujeito a alguma intervenção cirúrgica nos últimos 12 meses?", r4, -1)
 
-        var r5 = mutableListOf(
-                "analfabeto",
-                "ensino fundamental incompleto",
-                "ensino fundamental completo",
-                "ensino médio incompleto",
-                "ensino médio completo",
-                "ensino superior completo",
-                "ensino superior incompleto", "", "")
-        val q5 = Questao("Escolaridade", r5, -1)
+        var r5 = mutableListOf("(colocar campo para escrever o nome da intervenção)", nsa, "", "", "", "", "", "", "")
+        val q5 = Questao("1.4.1. Caso tenha sido sujeito a intervensão nos últimos 12 meses, especifique:", r5, -1)
 
-        var r6 = mutableListOf("acidente automobilístico", "agressão física", "outros", "", "", "", "", "", "")
-        val q6 = Questao("Agente etiológico", r6, -1)
+        var r6 = mutableListOf("Não", "Sim", "", "", "", "", "", "", "")
+        val q6 = Questao("2. Autonomia\n2.1. É autónomo em todas as tarefas diárias (ex: vestir-se, tomar banho, etc.)?", r6, -1)
 
-        var r7 = mutableListOf("automóvel", "motocicleta", "atropelamento", nsa, "", "", "", "", "")
-        val q7 = Questao("Tipo de acidente", r7, -1)
+        var r7 = mutableListOf("Não", "Sim", "", "", "", "", "", "", "")
+        val q7 = Questao("2.2. Utiliza algum auxiliar de marcha (canadiana, bengala, etc)?", r7, -1)
 
-        var r8 = mutableListOf("dia útil", "final de semana", nsa, "", "", "", "", "", "")
-        val q8 = Questao("Dia acidente", r8, -1)
+        var r8 = mutableListOf("Não", "Sim", nsa, "", "", "", "", "", "")
+        val q8 = Questao("2.2.1. Se sim, este equipamento permite que se desloque autonomamente?", r8, -1)
 
-        var r9 = mutableListOf("madrugada", "manhã", "tarde", "noite", nsa, "", "", "", "")
-        val q9 = Questao("Horário acidente", r9, -1)
+        var r9 = mutableListOf("Não", "Sim", "", "", "", "", "", "", "")
+        val q9 = Questao("3. Doenças Crónicas e Medicação\n3.1. Toma medicamentos actualmente?", r9, -1)
 
-        var r10 = mutableListOf("violência doméstica", "violência interpessoal", "assalto", nsa, "", "", "", "", "")
-        val q10 = Questao("Tipo de agressão", r10, -1)
+        var r10 = mutableListOf("(colocar campo para escrever o quantos medicamentos toma)", nsa, "", "", "", "", "", "", "")
+        val q10 = Questao("3.1.1. Caso tome medicamentos actualmente, quantos toma?", r10, -1)
 
-        var r11 = mutableListOf("masculino", "feminino", nsa, "", "", "", "", "", "")
-        val q11 = Questao("Sexo do agressor", r11, -1)
+        var r11 = mutableListOf("Não", "Sim", nsa, "", "", "", "", "", "")
+        val q11 = Questao("3.1.2. Caso tome medicamentos actualmente, toma medicamentos para doenças do foro psíquico?", r11, -1)
 
-        var r12 = mutableListOf("companheiro", "ex-companheiro", "familiar", "conhecido", "estranho", nsa, "", "", "")
-        val q12 = Questao("Agressor", r12, -1)
+        var r12 = mutableListOf("Nunca", "Ocasionalmente", "Frequentemente", "Sempre", "", "", "", "", "")
+        val q12 = Questao("4. Ocorrência de quedas (últimos 12 meses)\n4.1. Tem medo de cair?", r12, -1)
 
-        var r13 = mutableListOf("arma branca", "arma de fogo", "objeto contuso", "não informado", nsa, "", "", "", "")
-        val q13 = Questao("Arma utilizada", r13, -1)
+        var r13 = mutableListOf("Não", "Sim", nsa, "", "", "", "", "", "")
+        val q13 = Questao("4.1.1. Esse medo de cair o impede-o de realizar alguma(s) das actividades diárias? que se seguem?", r13, -1)
 
-        var r14 = mutableListOf("dia útil", "final de semana", nsa, "", "", "", "", "", "")
-        val q14 = Questao("Data agressão", r14, -1)
+        var r14 = mutableListOf("(colocar campo para escrever quantas vezes caiu)", nsa, "", "", "", "", "", "", "")
+        val q14 = Questao("4.2. No último ano (12 meses) quantas vezes caiu?", r14, -1)
 
-        var r15 = mutableListOf("madrugada", "manhã", "tarde", "noite", nsa, "", "", "", "")
-        val q15 = Questao("Horário agressão", r15, -1)
+        var r15 = mutableListOf(
+                "Dentro da sua casa",
+                "À entrada de casa ou no quintal",
+                "Fora de casa no exterior",
+                "Fora de casa num espaço fechado", nsa, "", "", "", "")
+        val q15 = Questao("4.2.1. Em relação à pior queda (consequência mais grave).\nOnde caiu?", r15, -1)
 
-        var r16 = mutableListOf("sim", "não", "", "", "", "", "", "", "")
-        val q16 = Questao("Lesão facial tecido mole", r16, -1)
+        var r16 = mutableListOf(
+                "Escorreguei",
+                "Tropecei",
+                "Perdi os sentidos",
+                "Tive uma tontura",
+                "Senti fraqueza nas pernas", "Outra (colocar campo)", nsa, "", "")
+        val q16 = Questao("4.2.1. Em relação à pior queda (consequência mais grave).\nPorque caiu?", r16, -1)
 
-        var r17 = mutableListOf("sim", "não", "", "", "", "", "", "", "")
-        val q17 = Questao("Lesão facial fratura óssea", r17, -1)
+        var r17 = mutableListOf(
+                "Caminhar",
+                "Caminhar a subir (rampa, ladeira, outro)",
+                "Caminhar a descer (rampa, ladeira, outro)",
+                "Subir escadas",
+                "Descer escadas",
+                "Baixar ou Levantar",
+                "Ultrapassar Obstáculo (passeio, outro)",
+                "Outra (colocar campo)", nsa)
+        val q17 = Questao("4.2.1. Em relação à pior queda (consequência mais grave).\nO que estava a fazer?", r17, -1)
 
-        var r18 = mutableListOf("sim", "não", "", "", "", "", "", "", "")
-        val q18 = Questao("Lesão facial fratura dentoalveolar", r18, -1)
+        var r18 = mutableListOf("(colocar campo para escrever o tempo)", nsa, "", "", "", "", "", "", "")
+        val q18 = Questao("4.2.1. Em relação à pior queda (consequência mais grave).\n" +
+                "Como resultado da queda, quanto tempo esteve impossibilitado de realizar as actividades normais do dia-a-dia?", r18, -1)
 
-        var r19 = mutableListOf("sim", "não", "", "", "", "", "", "", "")
-        val q19 = Questao("Lesão sem interesse odontolegal", r19, -1)
+        var r19 = mutableListOf("Não", "Sim", nsa, "", "", "", "", "", "")
+        val q19 = Questao("4.2.1. Em relação à pior queda (consequência mais grave).\nComo resultado da queda sofreu alguma lesão?", r19, -1)
 
-        var r20 = mutableListOf("contundente", "perfuro-contundente", "cortante",
-                "perfuro-cortante", "perfurante", "corto-contusa", "não informado", "", "")
-        val q20 = Questao("Tipo Lesão Tecido Mole", r20, -1)
+        var r20 = mutableListOf("Não", "Sim", nsa, "", "", "", "", "", "")
+        val q20 = Questao("4.2.1. Em relação à pior queda (consequência mais grave).\nSe sofreu lesão, fez alguma fractura?", r20, -1)
 
-        var r21 = mutableListOf("ferida contusa", "escoriação", "equimose", "hematoma",
-                "mordida humana", "laceração", "edema", "cicatriz", "")
-        val q21 = Questao("Lesão tecido mole", r21, -1)
+        var r21 = mutableListOf(
+                "Pescoço",
+                "Ombros",
+                "Zona Dorsal",
+                "Cotovelos",
+                "Zona Lombar",
+                "Pulso/Mãos",
+                "Coxa/Anca",
+                "Joelhos",
+                "Tornozelos/Pés")
+        val q21 = Questao("4.2.1. Em relação à pior queda (consequência mais grave).\nOnde? Assinale o local na imagem.", r21, -1)
 
-        var r22 = mutableListOf("lábil superior", "lábil inferior", "periorbitária",
-                "mentoniana", "mandibular", "bucinadora maceterina", "nasal",
-                "mucosa oral", "zigomática")
-        val q22 = Questao("Localização da lesão no tecido mole", r22, -1)
+        var r22 = mutableListOf("Positivo", "Negativo", "", "", "", "", "", "", "")
+        val q22 = Questao("5.1. TESTE DE ROMBERG -  O médico orienta o paciente para que permaneça, por alguns segundos, em posição vertical, com os pés juntos, inicialmente olhando para a frente. Em seguida, pede para que ele feche os olhos. • A prova de Romberg é positiva quando o paciente apresenta, então, oscilações do corpo, com desequilíbrio e forte tendência à queda, que pode ser: - para qualquer lado e imediatamente após interromper a visão, indicando lesão das vias de sensibilidade proprioceptiva consciente. - sempre para o mesmo lado após pequeno período de latência, o que indica lesão do aparelho vestibular. • No indivíduo normal, nada é observado, mas em caso de labirintopatias, a prova de Romberg é positiva.", r22, -1)
 
-        var r23 = mutableListOf("mandibula", "maxila", "complexo zigomático orbitário",
-                "OPN", "frontal", "NOE", "", "", "")
-        val q23 = Questao("Localização de fratura na face", r23, -1)
+        var r23 = mutableListOf("Positivo", "Negativo", "", "", "", "", "", "", "")
+        val q23 = Questao("5.2. Teste de Unterberger-FUKUDA -  paciente marcha parado no mesmo lugar de olhos fechados. Observa-se a rotação para o lado hipoativo se houver lesão vestibular unilateral.", r23, -1)
 
-        var r24 = mutableListOf("sim", "não", "", "", "", "", "", "", "")
-        val q24 = Questao("Lesão dentária", r24, -1)
+        var r24 = mutableListOf("Positivo", "Negativo", "", "", "", "", "", "", "")
+        val q24 = Questao("5.3. TIME GET UP AND GO (TUGT)  AVALIAÇÃO DE RISCO DE QUEDAS - O idoso deverá estar sentado em uma cadeira com apoio lateral de braço. Solicite ao idoso, que se levante sem apoiar nas laterais da cadeira, caminhe 3 metros, virando 180º e retornando ao ponto de partida, para sentar-se novamente.", r24, -1)
 
-        var r25 = mutableListOf("coronária", "avulsão", "mobilidade", "luxação lateral",
-                "extraído por causa do trauma", "não informado", "subluxação", "fratura de prótese", "extrusão")
-        val q25 = Questao("Tipo de Lesão Dentária", r25, -1)
-
-        var r26 = mutableListOf("0 a 8", "9 a 16", "17 a 24", "25 a 32", "", "", "", "", "")
-        val q26 = Questao("Quantidade de dentes traumatizados", r26, -1)
-
-        var r27 = mutableListOf("sim", "não", "", "", "", "", "", "", "")
-        val q27 = Questao("Há ofensa à integridade corporal ou à saúde do paciente?", r27, -1)
-
-        var r28 = mutableListOf("Contundente", "corto-contundente", "perfuro-cortante",
-                "perfuro-contundente", "não informado", "", "", "", "")
-        val q28 = Questao("Qual o instrumento ou meio que produziu a ofensa?", r28, -1)
-
-        var r29 = mutableListOf("sim", "não", "sem elementos para afirmar ou negar", "prejudicado", "", "", "", "", "")
-        val q29 = Questao("Foi produzido por meio de veneno, fogo, explosivo ou tortura, ou outro meio insidioso ou cruel?", r29, -1)
-
-        var r30 = mutableListOf("sim", "não", "sem elementos para afirmar ou negar",
-                "prejudicado", "retornar para novo exame com laudo profissional e/ou exame complementar", "", "", "", "")
-        val q30 = Questao("Resultou em incapacidade para as ocupações habituais por mais de trinta dias?", r30, -1)
-
-        var r31 = mutableListOf("sim", "não", "sem elementos para afirmar ou negar", "prejudicado", "", "", "", "", "")
-        val q31 = Questao("Houve perigo de vida?", r31, -1)
-
-        var r32 = mutableListOf("sim, causou debilidade permanente da função mastigatória",
-                "não", "sem elementos para afirmar ou negar", "prejudicado",
-                "retornar para novo exame com o laudo profissional e/ou exame complementar", "", "", "", "")
-        val q32 = Questao("Resultou em debilidade permanente, perda ou inutilização de membro, sentido ou função?", r32, -1)
-
-        var r33 = mutableListOf("sim, causou deformidade permanente da função mastigatória",
-                "não", "sem elementos para afirmar ou negar", "prejudicado",
-                "retornar para novo exame com o laudo profissional e/ou exame complementar", "", "", "", "")
-        val q33 = Questao("Resultou em incapacidade permanente para o trabalho, enfermidade incurável ou deformidade permanente?", r33, -1)
-
-        return Questionario(0, mutableListOf<Questao>(q0, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24, q25, q26, q27, q28, q29, q30, q31, q32, q33))
+        return Questionario(0, mutableListOf<Questao>(q0, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24))
     }
 
     fun criarQuestionarioContador(questionario: Questionario): QuestionarioContador {

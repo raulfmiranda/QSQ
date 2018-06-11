@@ -12,6 +12,8 @@ class StartActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
 
+        supportActionBar?.title = "Questionário de Saúde e Quedas"
+
         btnIniciar.setOnClickListener {
             startActivity<FormActivity>()
         }
