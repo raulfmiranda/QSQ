@@ -25,9 +25,9 @@
     <RadioGroup
         android:id="@+id/radioGroup"
         android:layout_width="wrap_content"
-        android:layout_height="300dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtPergunta">
 
@@ -100,6 +100,13 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Resposta 8" />
+
+        <RadioButton
+            android:id="@+id/rdResposta9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Outra" />
     </RadioGroup>
 
     <Button
@@ -114,4 +121,55 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/edtResposta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_weight="1"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:paddingBottom="6dp"
+        android:text="Outra"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@+id/radioGroup"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+    <TextView
+        android:id="@+id/txtMostrarImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="Mostrar Imagem"
+        app:layout_constraintBottom_toTopOf="@+id/btnProx"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/frameImg"
+        android:layout_width="250dp"
+        android:layout_height="326dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"
+        android:elevation="4dp"
+        android:background="@color/colorLightBlue"
+        app:layout_constraintBottom_toBottomOf="@+id/btnProx"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txtPergunta"
+        app:layout_constraintVertical_bias="0.521">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/corpo" />
+    </FrameLayout>
+
 </android.support.constraint.ConstraintLayout>

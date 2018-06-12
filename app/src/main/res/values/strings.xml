@@ -1,3 +1,43 @@
 <resources>
     <string name="app_name">QSQ</string>
+
+    <string name="q0">1. Estado de Saúde Geral\n1.1. Considera que, actualmente, a sua saúde é:</string>
+    <string-array name="q0">
+        <item>Muito má</item>
+        <item>Má</item>
+        <item>Razoável</item>
+        <item>Boa</item>
+        <item>Excelente</item>
+    </string-array>
+
+    <string name="q1">1.1. Actualmente diria que a sua visão, usando ambos os olhos (com óculos ou lentes de contacto, se os utilizar) é:</string>
+    <string-array name="q1">
+        <item>Muito má</item>
+        <item>Má</item>
+        <item>Razoável</item>
+        <item>Boa</item>
+        <item>Excelente</item>
+    </string-array>
+
+    <string name="q2">1.2. Usa lentes bifocais?</string>
+    <string-array name="q2">
+        <item>Não</item>
+        <item>Sim</item>
+    </string-array>
+
+    <string name="q3">1.3. Considera que, actualmente, a sua audição (com aparelho auditivo, se o utilizar) é</string>
+    <string-array name="q3">
+        <item>Muito má</item>
+        <item>Má</item>
+        <item>Razoável</item>
+        <item>Boa</item>
+        <item>Excelente</item>
+    </string-array>
+
+    <string name="q4">1.4. Foi sujeito a alguma intervenção cirúrgica nos últimos 12 meses?</string>
+    <string-array name="q4">
+        <item>Não</item>
+        <item>Sim</item>
+    </string-array>
+
 </resources>

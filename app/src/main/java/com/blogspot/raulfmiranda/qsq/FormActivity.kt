@@ -4,11 +4,11 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
+import android.text.Editable
 import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.WindowManager
-import android.widget.RadioButton
-import android.widget.Toast
+import android.widget.*
 import com.blogspot.raulfmiranda.qsq.R
 import com.blogspot.raulfmiranda.qsq.model.*
 import kotlinx.android.synthetic.main.activity_form.*
@@ -124,6 +124,21 @@ class FormActivity : AppCompatActivity() {
             else {
                 Toast.makeText(this, "Escolha uma opção.", Toast.LENGTH_SHORT).show()
             }
+
+            txtMostrarImg.setOnClickListener {
+                if(frameImg.visibility == FrameLayout.VISIBLE) {
+                    txtMostrarImg.setText("Mostrar imagem")
+                    frameImg.visibility = FrameLayout.GONE
+                } else {
+                    frameImg.visibility = FrameLayout.VISIBLE
+                    txtMostrarImg.setText("Esconder imagem")
+                }
+            }
+
+            frameImg.setOnClickListener {
+                txtMostrarImg.setText("Mostrar imagem")
+                it.visibility = FrameLayout.GONE
+            }
         }
 
     }
@@ -132,15 +147,39 @@ class FormActivity : AppCompatActivity() {
 
         txtPergunta.text = questao.pergunta
 
+//        for(i in questao.respostas.indices) {
         for (i in 0..8) {
             var rdResposta = radioGroup.getChildAt(i) as RadioButton
             if(!questao.respostas[i].isNullOrBlank()) {
                 rdResposta.text = questao.respostas[i]
                 rdResposta.visibility = RadioButton.VISIBLE
+
             } else {
                 rdResposta.text = ""
-                rdResposta.visibility = RadioButton.INVISIBLE
+                rdResposta.visibility = RadioButton.GONE
+//                rdResposta.visibility = RadioButton.INVISIBLE
             }
+        }
+
+        if(questao.respostas.size > 9) {
+            rdResposta9.visibility = RadioButton.VISIBLE
+            edtResposta.visibility = EditText.VISIBLE
+            edtResposta.setText("")
+            edtResposta.clearFocus()
+            edtResposta.isCursorVisible = false
+            rdResposta9.text = questao.respostas[9]
+        } else {
+            edtResposta.setText("")
+            edtResposta.isCursorVisible = false
+            rdResposta9.visibility = RadioButton.GONE
+            edtResposta.visibility = EditText.GONE
+        }
+
+        if(questionarioAtual.status == 21) {
+            txtMostrarImg.visibility = TextView.VISIBLE
+        } else {
+            txtMostrarImg.visibility = TextView.GONE
+            frameImg.visibility = FrameLayout.GONE
         }
     }
 
@@ -189,8 +228,8 @@ class FormActivity : AppCompatActivity() {
         var r4 = mutableListOf("Não", "Sim", "", "", "", "", "", "", "")
         val q4 = Questao("1.4. Foi sujeito a alguma intervenção cirúrgica nos últimos 12 meses?", r4, -1)
 
-        var r5 = mutableListOf("(colocar campo para escrever o nome da intervenção)", nsa, "", "", "", "", "", "", "")
-        val q5 = Questao("1.4.1. Caso tenha sido sujeito a intervensão nos últimos 12 meses, especifique:", r5, -1)
+        var r5 = mutableListOf(nsa, "", "", "", "", "", "", "", "", "Intervenção:")
+        val q5 = Questao("1.4.1. Caso tenha sido sujeito a intervensão nos últimos 12 meses, especifique.", r5, -1)
 
         var r6 = mutableListOf("Não", "Sim", "", "", "", "", "", "", "")
         val q6 = Questao("2. Autonomia\n2.1. É autónomo em todas as tarefas diárias (ex: vestir-se, tomar banho, etc.)?", r6, -1)
@@ -204,7 +243,7 @@ class FormActivity : AppCompatActivity() {
         var r9 = mutableListOf("Não", "Sim", "", "", "", "", "", "", "")
         val q9 = Questao("3. Doenças Crónicas e Medicação\n3.1. Toma medicamentos actualmente?", r9, -1)
 
-        var r10 = mutableListOf("(colocar campo para escrever o quantos medicamentos toma)", nsa, "", "", "", "", "", "", "")
+        var r10 = mutableListOf(nsa, "", "", "", "", "", "", "", "", "Quantidade:")
         val q10 = Questao("3.1.1. Caso tome medicamentos actualmente, quantos toma?", r10, -1)
 
         var r11 = mutableListOf("Não", "Sim", nsa, "", "", "", "", "", "")
@@ -216,7 +255,7 @@ class FormActivity : AppCompatActivity() {
         var r13 = mutableListOf("Não", "Sim", nsa, "", "", "", "", "", "")
         val q13 = Questao("4.1.1. Esse medo de cair o impede-o de realizar alguma(s) das actividades diárias? que se seguem?", r13, -1)
 
-        var r14 = mutableListOf("(colocar campo para escrever quantas vezes caiu)", nsa, "", "", "", "", "", "", "")
+        var r14 = mutableListOf(nsa, "", "", "", "", "", "", "", "", "Quantidade:")
         val q14 = Questao("4.2. No último ano (12 meses) quantas vezes caiu?", r14, -1)
 
         var r15 = mutableListOf(
@@ -231,7 +270,9 @@ class FormActivity : AppCompatActivity() {
                 "Tropecei",
                 "Perdi os sentidos",
                 "Tive uma tontura",
-                "Senti fraqueza nas pernas", "Outra (colocar campo)", nsa, "", "")
+                "Senti fraqueza nas pernas",
+                nsa, "", "", "",
+                "Outra:")
         val q16 = Questao("4.2.1. Em relação à pior queda (consequência mais grave).\nPorque caiu?", r16, -1)
 
         var r17 = mutableListOf(
@@ -242,10 +283,11 @@ class FormActivity : AppCompatActivity() {
                 "Descer escadas",
                 "Baixar ou Levantar",
                 "Ultrapassar Obstáculo (passeio, outro)",
-                "Outra (colocar campo)", nsa)
+                nsa, "",
+                "Outra:")
         val q17 = Questao("4.2.1. Em relação à pior queda (consequência mais grave).\nO que estava a fazer?", r17, -1)
 
-        var r18 = mutableListOf("(colocar campo para escrever o tempo)", nsa, "", "", "", "", "", "", "")
+        var r18 = mutableListOf(nsa, "", "", "", "", "", "", "", "", "Dias:")
         val q18 = Questao("4.2.1. Em relação à pior queda (consequência mais grave).\n" +
                 "Como resultado da queda, quanto tempo esteve impossibilitado de realizar as actividades normais do dia-a-dia?", r18, -1)
 

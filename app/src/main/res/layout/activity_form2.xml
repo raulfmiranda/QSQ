@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FormActivity2">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="@string/q0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/q0"/>
+
+            <TextView
+                android:text="@string/q1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/q1"/>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</FrameLayout>
+    <!--var r0 = mutableListOf("Muito má", "Má", "Razoável", "Boa", "Excelente", "", "", "", "")-->
+    <!--val q0 = Questao("1. Estado de Saúde Geral\n1.1. Considera que, actualmente, a sua saúde é:", r0, -1)-->
+
+    <!--var r1 = mutableListOf("Muito má", "Má", "Razoável", "Boa", "Excelente", "", "", "", "")-->
+    <!--val q1 = Questao("1.1. Actualmente diria que a sua visão, usando ambos os olhos (com óculos ou lentes de contacto, se os utilizar) é:", r1, -1)-->
+
+    <!--var r2 = mutableListOf("Não", "Sim", "", "", "", "", "", "", "")-->
+    <!--val q2 = Questao("1.2. Usa lentes bifocais?", r2, -1)-->
+
+    <!--var r3 = mutableListOf("Muito má", "Má", "Razoável", "Boa", "Excelente", "", "", "", "")-->
+    <!--val q3 = Questao("1.3. Considera que, actualmente, a sua audição (com aparelho auditivo, se o utilizar) é", r3, -1)-->
+
+    <!--var r4 = mutableListOf("Não", "Sim", "", "", "", "", "", "", "")-->
+    <!--val q4 = Questao("1.4. Foi sujeito a alguma intervenção cirúrgica nos últimos 12 meses?", r4, -1)-->
+
+    <!--var r5 = mutableListOf("(colocar campo para escrever o nome da intervenção)", nsa, "", "", "", "", "", "", "")-->
+    <!--val q5 = Questao("1.4.1. Caso tenha sido sujeito a intervensão nos últimos 12 meses, especifique:", r5, -1)-->
+
+    <!--var r6 = mutableListOf("Não", "Sim", "", "", "", "", "", "", "")-->
+    <!--val q6 = Questao("2. Autonomia\n2.1. É autónomo em todas as tarefas diárias (ex: vestir-se, tomar banho, etc.)?", r6, -1)-->
+
+    <!--var r7 = mutableListOf("Não", "Sim", "", "", "", "", "", "", "")-->
+    <!--val q7 = Questao("2.2. Utiliza algum auxiliar de marcha (canadiana, bengala, etc)?", r7, -1)-->
+
+    <!--var r8 = mutableListOf("Não", "Sim", nsa, "", "", "", "", "", "")-->
+    <!--val q8 = Questao("2.2.1. Se sim, este equipamento permite que se desloque autonomamente?", r8, -1)-->
+
+    <!--var r9 = mutableListOf("Não", "Sim", "", "", "", "", "", "", "")-->
+    <!--val q9 = Questao("3. Doenças Crónicas e Medicação\n3.1. Toma medicamentos actualmente?", r9, -1)-->
+
+    <!--var r10 = mutableListOf("(colocar campo para escrever o quantos medicamentos toma)", nsa, "", "", "", "", "", "", "")-->
+    <!--val q10 = Questao("3.1.1. Caso tome medicamentos actualmente, quantos toma?", r10, -1)-->
+
+    <!--var r11 = mutableListOf("Não", "Sim", nsa, "", "", "", "", "", "")-->
+    <!--val q11 = Questao("3.1.2. Caso tome medicamentos actualmente, toma medicamentos para doenças do foro psíquico?", r11, -1)-->
+
+    <!--var r12 = mutableListOf("Nunca", "Ocasionalmente", "Frequentemente", "Sempre", "", "", "", "", "")-->
+    <!--val q12 = Questao("4. Ocorrência de quedas (últimos 12 meses)\n4.1. Tem medo de cair?", r12, -1)-->
+
+    <!--var r13 = mutableListOf("Não", "Sim", nsa, "", "", "", "", "", "")-->
+    <!--val q13 = Questao("4.1.1. Esse medo de cair o impede-o de realizar alguma(s) das actividades diárias? que se seguem?", r13, -1)-->
+
+    <!--var r14 = mutableListOf("(colocar campo para escrever quantas vezes caiu)", nsa, "", "", "", "", "", "", "")-->
+    <!--val q14 = Questao("4.2. No último ano (12 meses) quantas vezes caiu?", r14, -1)-->
+
+    <!--var r15 = mutableListOf(-->
+    <!--"Dentro da sua casa",-->
+    <!--"À entrada de casa ou no quintal",-->
+    <!--"Fora de casa no exterior",-->
+    <!--"Fora de casa num espaço fechado", nsa, "", "", "", "")-->
+    <!--val q15 = Questao("4.2.1. Em relação à pior queda (consequência mais grave).\nOnde caiu?", r15, -1)-->
+
+    <!--var r16 = mutableListOf(-->
+    <!--"Escorreguei",-->
+    <!--"Tropecei",-->
+    <!--"Perdi os sentidos",-->
+    <!--"Tive uma tontura",-->
+    <!--"Senti fraqueza nas pernas", "Outra (colocar campo)", nsa, "", "")-->
+    <!--val q16 = Questao("4.2.1. Em relação à pior queda (consequência mais grave).\nPorque caiu?", r16, -1)-->
+
+    <!--var r17 = mutableListOf(-->
+    <!--"Caminhar",-->
+    <!--"Caminhar a subir (rampa, ladeira, outro)",-->
+    <!--"Caminhar a descer (rampa, ladeira, outro)",-->
+    <!--"Subir escadas",-->
+    <!--"Descer escadas",-->
+    <!--"Baixar ou Levantar",-->
+    <!--"Ultrapassar Obstáculo (passeio, outro)",-->
+    <!--"Outra (colocar campo)", nsa)-->
+    <!--val q17 = Questao("4.2.1. Em relação à pior queda (consequência mais grave).\nO que estava a fazer?", r17, -1)-->
+
+    <!--var r18 = mutableListOf("(colocar campo para escrever o tempo)", nsa, "", "", "", "", "", "", "")-->
+    <!--val q18 = Questao("4.2.1. Em relação à pior queda (consequência mais grave).\n" +-->
+    <!--"Como resultado da queda, quanto tempo esteve impossibilitado de realizar as actividades normais do dia-a-dia?", r18, -1)-->
+
+    <!--var r19 = mutableListOf("Não", "Sim", nsa, "", "", "", "", "", "")-->
+    <!--val q19 = Questao("4.2.1. Em relação à pior queda (consequência mais grave).\nComo resultado da queda sofreu alguma lesão?", r19, -1)-->
+
+    <!--var r20 = mutableListOf("Não", "Sim", nsa, "", "", "", "", "", "")-->
+    <!--val q20 = Questao("4.2.1. Em relação à pior queda (consequência mais grave).\nSe sofreu lesão, fez alguma fractura?", r20, -1)-->
+
+    <!--var r21 = mutableListOf(-->
+    <!--"Pescoço",-->
+    <!--"Ombros",-->
+    <!--"Zona Dorsal",-->
+    <!--"Cotovelos",-->
+    <!--"Zona Lombar",-->
+    <!--"Pulso/Mãos",-->
+    <!--"Coxa/Anca",-->
+    <!--"Joelhos",-->
+    <!--"Tornozelos/Pés")-->
+    <!--val q21 = Questao("4.2.1. Em relação à pior queda (consequência mais grave).\nOnde? Assinale o local na imagem.", r21, -1)-->
+
+    <!--var r22 = mutableListOf("Positivo", "Negativo", "", "", "", "", "", "", "")-->
+    <!--val q22 = Questao("5.1. TESTE DE ROMBERG -  O médico orienta o paciente para que permaneça, por alguns segundos, em posição vertical, com os pés juntos, inicialmente olhando para a frente. Em seguida, pede para que ele feche os olhos. • A prova de Romberg é positiva quando o paciente apresenta, então, oscilações do corpo, com desequilíbrio e forte tendência à queda, que pode ser: - para qualquer lado e imediatamente após interromper a visão, indicando lesão das vias de sensibilidade proprioceptiva consciente. - sempre para o mesmo lado após pequeno período de latência, o que indica lesão do aparelho vestibular. • No indivíduo normal, nada é observado, mas em caso de labirintopatias, a prova de Romberg é positiva.", r22, -1)-->
+
+    <!--var r23 = mutableListOf("Positivo", "Negativo", "", "", "", "", "", "", "")-->
+    <!--val q23 = Questao("5.2. Teste de Unterberger-FUKUDA -  paciente marcha parado no mesmo lugar de olhos fechados. Observa-se a rotação para o lado hipoativo se houver lesão vestibular unilateral.", r23, -1)-->
+
+    <!--var r24 = mutableListOf("Positivo", "Negativo", "", "", "", "", "", "", "")-->
+    <!--val q24 = Questao("5.3. TIME GET UP AND GO (TUGT)  AVALIAÇÃO DE RISCO DE QUEDAS - O idoso deverá estar sentado em uma cadeira com apoio lateral de braço. Solicite ao idoso, que se levante sem apoiar nas laterais da cadeira, caminhe 3 metros, virando 180º e retornando ao ponto de partida, para sentar-se novamente.", r24, -1)-->
