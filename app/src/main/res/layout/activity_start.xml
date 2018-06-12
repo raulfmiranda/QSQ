@@ -9,11 +9,8 @@
 
     <TextView
         android:id="@+id/txtLogo"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
         android:background="@color/colorMediumBlue"
         android:fontFamily="sans-serif-smallcaps"
         android:gravity="center"
@@ -34,8 +31,8 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@color/colorPrimary"
-        android:padding="10dp"
+        android:background="@drawable/rounded_rectangle"
+        android:padding="20dp"
         android:text="Iniciar Questionário"
         android:textColor="#ffffff"
         android:textStyle="bold"

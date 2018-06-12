@@ -25,7 +25,7 @@ class FormActivity : AppCompatActivity() {
         setContentView(R.layout.activity_form)
 
         txtPergunta.movementMethod = ScrollingMovementMethod()
-//        supportActionBar?.title = "Questionário de Saúde e Quedas"
+        supportActionBar?.title = "QSQ - Questionário"
 
         carregaQuestaoNaTela(questionarioAtual.questoes[0])
 
