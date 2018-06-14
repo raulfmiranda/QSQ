@@ -106,7 +106,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Outra" />
+            android:text="Resposta 9" />
+
+        <RadioButton
+            android:id="@+id/rdRespostaOutra"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Outra"
+            android:visibility="gone" />
     </RadioGroup>
 
     <Button
@@ -117,11 +125,14 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:background="@drawable/rounded_rectangle"
+        android:drawableEnd="@drawable/ic_next_24dp"
+        android:paddingLeft="16dp"
         android:text="Próxima"
         android:textColor="#fff"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
@@ -135,6 +146,7 @@
         android:paddingBottom="6dp"
         android:text="Outra"
         android:textSize="14sp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="@+id/radioGroup"
         app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
@@ -158,9 +170,9 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:visibility="gone"
-        android:elevation="4dp"
         android:background="@color/colorLightBlue"
+        android:elevation="4dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/btnProx"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

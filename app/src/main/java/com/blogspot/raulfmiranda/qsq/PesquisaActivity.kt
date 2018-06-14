@@ -33,7 +33,7 @@ class PesquisaActivity : AppCompatActivity() {
 
     var pesquisa: Pesquisa = Pesquisa(mutableListOf<Questionario>(), QuestionarioContador(mutableListOf<QuestaoContadora>()))
     val WRITE_EXTERNAL_STORAGE_CODE = 1
-    val relatorioPath = "/sdcard/TraumaDeFaceRel.pdf"
+    val relatorioPath = "/sdcard/QSQRel.pdf"
 
     companion object {
         val EXTRA_PESQUISA = "PESQUISA"
@@ -71,14 +71,14 @@ class PesquisaActivity : AppCompatActivity() {
 
         for(qc in questoesContadoras) {
             val perg = qc.pergunta
-            resumo = resumo + "\n\n # $perg\n"
+            resumo = resumo + "\n\n $perg\n"
             for(resp in qc.respostasContadoras) {
                 val key = resp.key
                 if(!key.isNullOrBlank()) {
                     val value = resp.value
                     var perc = (value.toDouble() / qtdQuestionarios.toDouble()) * 100
                     var percFormat = "%.1f".format(perc)
-                    resumo = resumo + "\n · $key ($percFormat%)"
+                    resumo = resumo + "\n · $key (${resp.value}/$qtdQuestionarios = $percFormat%)"
                 }
             }
         }
@@ -111,13 +111,14 @@ class PesquisaActivity : AppCompatActivity() {
         val widthA4 = 595
         val heightA4 = 842
         var pagesInfo = mutableListOf<PdfDocument.PageInfo>()
-        for (i in 1..11) {
+        for (i in 1..8) {
             pagesInfo.add(PdfDocument.PageInfo.Builder(widthA4, heightA4, i).create())
         }
 
         var textPaint = TextPaint()
         textPaint.isAntiAlias = true
-        textPaint.textSize = 12 * resources.displayMetrics.density
+//        textPaint.textSize = 12 * resources.displayMetrics.density
+        textPaint.textSize = 10 * resources.displayMetrics.density
         textPaint.color = Color.BLACK
 
         var lines = txtResumo.text.toString().lines()
@@ -132,16 +133,19 @@ class PesquisaActivity : AppCompatActivity() {
             canvas.drawPaint(paint)
 
             paint.color = Color.BLACK
-            paint.textSize = 14f
+//            paint.textSize = 14f
+            paint.textSize = 10f
 
             while(i < lines.size) {
-                if(i > 25 * pgInf.pageNumber) {
+//                if(i > 25 * pgInf.pageNumber) {
+                if(i > 29 * pgInf.pageNumber) {
                     break
                 }
                 else {
-                    var staticLayout = StaticLayout(lines[i], textPaint, canvas.width, Layout.Alignment.ALIGN_NORMAL, 0.8f, 0f, false)
+                    var staticLayout = StaticLayout(lines[i], textPaint, canvas.width, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, true)
                     canvas.save()
-                    canvas.translate(0f, 30f)
+//                    canvas.translate(0f, 30f)
+                    canvas.translate(0f, 25f)
                     staticLayout.draw(canvas)
                     i++
                 }

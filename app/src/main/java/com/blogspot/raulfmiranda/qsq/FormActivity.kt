@@ -29,6 +29,20 @@ class FormActivity : AppCompatActivity() {
 
         carregaQuestaoNaTela(questionarioAtual.questoes[0])
 
+//        btnVoltar.setOnClickListener {
+//            radioGroup.clearCheck()
+//            var s = questionarioAtual.status
+//
+//            if(s < 1) {
+//                finish()
+//            }
+//            else {
+//                pesquisa.questionarios.remove(questionarioAtual)
+//                s = --questionarioAtual.status
+//                carregaQuestaoNaTela(questionarioAtual.questoes[s])
+//            }
+//        }
+
         btnProx.setOnClickListener {
             val rdId = radioGroup.checkedRadioButtonId
             if(rdId != -1) {
@@ -106,6 +120,14 @@ class FormActivity : AppCompatActivity() {
                         value++
                         questionarioContador.questoesContadoras[s].respostasContadoras.set(key, value)
                     }
+                    R.id.rdResposta9 -> {
+                        questionarioAtual.questoes[s].respostaEscolhida = 9
+
+                        val key = questionarioAtual.questoes[s].respostas[9]
+                        var value = questionarioContador.questoesContadoras[s].respostasContadoras.getValue(key)
+                        value++
+                        questionarioContador.questoesContadoras[s].respostasContadoras.set(key, value)
+                    }
                 }
 
                 radioGroup.clearCheck()
@@ -118,7 +140,7 @@ class FormActivity : AppCompatActivity() {
                 else {
                     btnProx.isClickable = false
                     pesquisa.questionarios.add(questionarioAtual)
-//                    showEndAlert()
+                    showEndAlert()
                 }
             }
             else {
@@ -147,33 +169,43 @@ class FormActivity : AppCompatActivity() {
 
         txtPergunta.text = questao.pergunta
 
-//        for(i in questao.respostas.indices) {
-        for (i in 0..8) {
+        // Esconde todos os radio buttons
+        val lastChildIndex = radioGroup.childCount - 1
+        for (i in 0..lastChildIndex) {
+            var rdResposta = radioGroup.getChildAt(i) as RadioButton
+            rdResposta.text = ""
+            rdResposta.visibility = RadioButton.GONE
+        }
+
+//        for (i in 0..9) {
+        // Torna visível apenas o radio buttons necessários
+        for(i in questao.respostas.indices) {
             var rdResposta = radioGroup.getChildAt(i) as RadioButton
             if(!questao.respostas[i].isNullOrBlank()) {
                 rdResposta.text = questao.respostas[i]
                 rdResposta.visibility = RadioButton.VISIBLE
 
-            } else {
-                rdResposta.text = ""
-                rdResposta.visibility = RadioButton.GONE
-//                rdResposta.visibility = RadioButton.INVISIBLE
             }
+//            else {
+//                rdResposta.text = ""
+//                rdResposta.visibility = RadioButton.GONE
+////                rdResposta.visibility = RadioButton.INVISIBLE
+//            }
         }
 
-        if(questao.respostas.size > 9) {
-            rdResposta9.visibility = RadioButton.VISIBLE
-            edtResposta.visibility = EditText.VISIBLE
-            edtResposta.setText("")
-            edtResposta.clearFocus()
-            edtResposta.isCursorVisible = false
-            rdResposta9.text = questao.respostas[9]
-        } else {
-            edtResposta.setText("")
-            edtResposta.isCursorVisible = false
-            rdResposta9.visibility = RadioButton.GONE
-            edtResposta.visibility = EditText.GONE
-        }
+//        if(questao.respostas.size > 10) { // Verificar tamanho com cuidado
+//            rdResposta10.visibility = RadioButton.VISIBLE
+//            edtResposta.visibility = EditText.VISIBLE
+//            edtResposta.setText("")
+//            edtResposta.clearFocus()
+//            edtResposta.isCursorVisible = false
+//            rdResposta9.text = questao.respostas[9]
+//        } else {
+//            edtResposta.setText("")
+//            edtResposta.isCursorVisible = false
+//            rdResposta9.visibility = RadioButton.GONE
+//            edtResposta.visibility = EditText.GONE
+//        }
 
         if(questionarioAtual.status == 21) {
             txtMostrarImg.visibility = TextView.VISIBLE
@@ -190,7 +222,6 @@ class FormActivity : AppCompatActivity() {
         builder.setMessage("Deseja realizar novo questionário ou finalizar a pesquisa?")
 
         builder.setPositiveButton("Finalizar Pesquisa") {dialog, which ->
-            Log.d("traumadeface", questionarioContador.toString())
             val intent = Intent(context, PesquisaActivity::class.java)
             intent.putExtra(PesquisaActivity.EXTRA_PESQUISA, pesquisa)
             startActivity(intent)
@@ -228,8 +259,15 @@ class FormActivity : AppCompatActivity() {
         var r4 = mutableListOf("Não", "Sim", "", "", "", "", "", "", "")
         val q4 = Questao("1.4. Foi sujeito a alguma intervenção cirúrgica nos últimos 12 meses?", r4, -1)
 
-        var r5 = mutableListOf(nsa, "", "", "", "", "", "", "", "", "Intervenção:")
-        val q5 = Questao("1.4.1. Caso tenha sido sujeito a intervensão nos últimos 12 meses, especifique.", r5, -1)
+//        var r5 = mutableListOf(nsa, "", "", "", "", "", "", "", "", "Intervenção:")
+        var r5 = mutableListOf(
+                "Intervenção Abdominal",
+                "Intervenção Torácica",
+                "Intervenção Pélvica",
+                "Intervenção em Membro Superior",
+                "Intervenção em membro Inferior",
+                "Intervenção Cabeça e Coluna", nsa, "", "")
+        val q5 = Questao("1.4.1. Caso tenha sido sujeito a intervenção nos últimos 12 meses, especifique.", r5, -1)
 
         var r6 = mutableListOf("Não", "Sim", "", "", "", "", "", "", "")
         val q6 = Questao("2. Autonomia\n2.1. É autónomo em todas as tarefas diárias (ex: vestir-se, tomar banho, etc.)?", r6, -1)
@@ -243,7 +281,8 @@ class FormActivity : AppCompatActivity() {
         var r9 = mutableListOf("Não", "Sim", "", "", "", "", "", "", "")
         val q9 = Questao("3. Doenças Crónicas e Medicação\n3.1. Toma medicamentos actualmente?", r9, -1)
 
-        var r10 = mutableListOf(nsa, "", "", "", "", "", "", "", "", "Quantidade:")
+//        var r10 = mutableListOf(nsa, "", "", "", "", "", "", "", "", "Quantidade:") // lembrar que aumentei a quantidade de radio buttons
+        var r10 = mutableListOf("1 a 4", "5 a 8", "8 a 10", "maior que 10", nsa, "", "", "", "")
         val q10 = Questao("3.1.1. Caso tome medicamentos actualmente, quantos toma?", r10, -1)
 
         var r11 = mutableListOf("Não", "Sim", nsa, "", "", "", "", "", "")
@@ -255,7 +294,12 @@ class FormActivity : AppCompatActivity() {
         var r13 = mutableListOf("Não", "Sim", nsa, "", "", "", "", "", "")
         val q13 = Questao("4.1.1. Esse medo de cair o impede-o de realizar alguma(s) das actividades diárias? que se seguem?", r13, -1)
 
-        var r14 = mutableListOf(nsa, "", "", "", "", "", "", "", "", "Quantidade:")
+//        var r14 = mutableListOf(nsa, "", "", "", "", "", "", "", "", "Quantidade:") // lembrar que aumentei a quantidade de radio buttons
+        var r14 = mutableListOf(
+                "menos que 2 quedas",
+                "de 3 a 5 quedas",
+                "de 6 a 8 quedas",
+                "maior que 9 quedas", nsa, "", "", "", "")
         val q14 = Questao("4.2. No último ano (12 meses) quantas vezes caiu?", r14, -1)
 
         var r15 = mutableListOf(
@@ -265,16 +309,33 @@ class FormActivity : AppCompatActivity() {
                 "Fora de casa num espaço fechado", nsa, "", "", "", "")
         val q15 = Questao("4.2.1. Em relação à pior queda (consequência mais grave).\nOnde caiu?", r15, -1)
 
+//        var r16 = mutableListOf(
+//                "Escorreguei",
+//                "Tropecei",
+//                "Perdi os sentidos",
+//                "Tive uma tontura",
+//                "Senti fraqueza nas pernas",
+//                nsa, "", "", "",
+//                "Outra:")
         var r16 = mutableListOf(
                 "Escorreguei",
                 "Tropecei",
                 "Perdi os sentidos",
                 "Tive uma tontura",
                 "Senti fraqueza nas pernas",
-                nsa, "", "", "",
-                "Outra:")
+                "Outra", nsa, "", "")
         val q16 = Questao("4.2.1. Em relação à pior queda (consequência mais grave).\nPorque caiu?", r16, -1)
 
+//        var r17 = mutableListOf(
+//                "Caminhar",
+//                "Caminhar a subir (rampa, ladeira, outro)",
+//                "Caminhar a descer (rampa, ladeira, outro)",
+//                "Subir escadas",
+//                "Descer escadas",
+//                "Baixar ou Levantar",
+//                "Ultrapassar Obstáculo (passeio, outro)",
+//                nsa, "",
+//                "Outra:") // lembrar que aumentei a quantidade de radio buttons
         var r17 = mutableListOf(
                 "Caminhar",
                 "Caminhar a subir (rampa, ladeira, outro)",
@@ -283,11 +344,15 @@ class FormActivity : AppCompatActivity() {
                 "Descer escadas",
                 "Baixar ou Levantar",
                 "Ultrapassar Obstáculo (passeio, outro)",
-                nsa, "",
-                "Outra:")
+                "Outra", nsa)
         val q17 = Questao("4.2.1. Em relação à pior queda (consequência mais grave).\nO que estava a fazer?", r17, -1)
 
-        var r18 = mutableListOf(nsa, "", "", "", "", "", "", "", "", "Dias:")
+//        var r18 = mutableListOf(nsa, "", "", "", "", "", "", "", "", "Dias:")
+        var r18 = mutableListOf(
+                "de 1 a 2 semanas",
+                "de 3 a 4 semanas",
+                "de 5 a 8 semanas",
+                "maior que 8 semanas", nsa, "", "", "", "")
         val q18 = Questao("4.2.1. Em relação à pior queda (consequência mais grave).\n" +
                 "Como resultado da queda, quanto tempo esteve impossibilitado de realizar as actividades normais do dia-a-dia?", r18, -1)
 
@@ -306,17 +371,17 @@ class FormActivity : AppCompatActivity() {
                 "Pulso/Mãos",
                 "Coxa/Anca",
                 "Joelhos",
-                "Tornozelos/Pés")
-        val q21 = Questao("4.2.1. Em relação à pior queda (consequência mais grave).\nOnde? Assinale o local na imagem.", r21, -1)
+                "Tornozelos/Pés", nsa)
+        val q21 = Questao("4.2.1. Em relação à pior queda (consequência mais grave).\nOnde? Assinale o local (vide imagem).", r21, -1)
 
         var r22 = mutableListOf("Positivo", "Negativo", "", "", "", "", "", "", "")
-        val q22 = Questao("5.1. TESTE DE ROMBERG -  O médico orienta o paciente para que permaneça, por alguns segundos, em posição vertical, com os pés juntos, inicialmente olhando para a frente. Em seguida, pede para que ele feche os olhos. • A prova de Romberg é positiva quando o paciente apresenta, então, oscilações do corpo, com desequilíbrio e forte tendência à queda, que pode ser: - para qualquer lado e imediatamente após interromper a visão, indicando lesão das vias de sensibilidade proprioceptiva consciente. - sempre para o mesmo lado após pequeno período de latência, o que indica lesão do aparelho vestibular. • No indivíduo normal, nada é observado, mas em caso de labirintopatias, a prova de Romberg é positiva.", r22, -1)
+        val q22 = Questao("5.1. TESTE DE ROMBERG -  O médico orienta o paciente para que \npermaneça, por alguns segundos, em posição vertical, com os \npés juntos, inicialmente olhando para a frente.\nEm seguida, pede para que ele feche os olhos.\n• A prova de Romberg é positiva quando o paciente apresenta, \nentão, oscilações do corpo, com desequilíbrio e forte tendência à\n queda, que pode ser:\n- para qualquer lado e imediatamente após interromper a visão, \nindicando lesão das vias de sensibilidade proprioceptiva \nconsciente.\n- sempre para o mesmo lado após pequeno período de latência, \no que indica lesão do aparelho vestibular.\n• No indivíduo normal, nada é observado, mas em caso de labirintopatias, a prova de Romberg é positiva.\n", r22, -1)
 
         var r23 = mutableListOf("Positivo", "Negativo", "", "", "", "", "", "", "")
-        val q23 = Questao("5.2. Teste de Unterberger-FUKUDA -  paciente marcha parado no mesmo lugar de olhos fechados. Observa-se a rotação para o lado hipoativo se houver lesão vestibular unilateral.", r23, -1)
+        val q23 = Questao("5.2. Teste de Unterberger-FUKUDA -  paciente marcha parado no \nmesmo lugar de olhos fechados. Observa-se a rotação para o lado \nhipoativo se houver lesão vestibular unilateral.", r23, -1)
 
         var r24 = mutableListOf("Positivo", "Negativo", "", "", "", "", "", "", "")
-        val q24 = Questao("5.3. TIME GET UP AND GO (TUGT)  AVALIAÇÃO DE RISCO DE QUEDAS - O idoso deverá estar sentado em uma cadeira com apoio lateral de braço. Solicite ao idoso, que se levante sem apoiar nas laterais da cadeira, caminhe 3 metros, virando 180º e retornando ao ponto de partida, para sentar-se novamente.", r24, -1)
+        val q24 = Questao("5.3. TIME GET UP AND GO (TUGT)  AVALIAÇÃO DE RISCO DE \nQUEDAS - O idoso deverá estar sentado em uma cadeira com \napoio lateral de braço. Solicite ao idoso, que se levante sem \napoiar nas laterais da cadeira, caminhe 3 metros, virando 180º e retornando ao ponto de partida, para sentar-se novamente.\n", r24, -1)
 
         return Questionario(0, mutableListOf<Questao>(q0, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24))
     }
