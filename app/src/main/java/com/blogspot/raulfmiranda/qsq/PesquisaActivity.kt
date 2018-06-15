@@ -19,6 +19,7 @@ import java.io.FileOutputStream
 import java.io.IOException
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.text.Layout
 import android.text.StaticLayout
 import android.text.TextPaint
@@ -27,6 +28,9 @@ import com.blogspot.raulfmiranda.qsq.R
 import com.blogspot.raulfmiranda.qsq.model.QuestaoContadora
 import com.blogspot.raulfmiranda.qsq.model.QuestionarioContador
 import org.jetbrains.anko.*
+import android.os.StrictMode
+
+
 
 
 class PesquisaActivity : AppCompatActivity() {
@@ -42,6 +46,13 @@ class PesquisaActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pesquisa)
+
+        // Para abrir o pdf API >= 24 (Nougat)
+        if(Build.VERSION.SDK_INT >= 24) {
+            // Por causa da exceção: android.os.FileUriExposedException: file:///sdcard/QSQRel.pdf exposed beyond app through Intent.getData()
+            val builder = StrictMode.VmPolicy.Builder()
+            StrictMode.setVmPolicy(builder.build())
+        }
 
         val titulo = "Dados Estatísticos da Pesquisa"
         supportActionBar?.title = titulo
@@ -181,6 +192,12 @@ class PesquisaActivity : AppCompatActivity() {
                 // Show an expanation to the user *asynchronously* -- don't block
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.
+
+                // TODO:Apenas copiei o mesmo que está no ELSE abaixo.
+                ActivityCompat.requestPermissions(this@PesquisaActivity,
+                        Array<String>(1){Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        WRITE_EXTERNAL_STORAGE_CODE);
+
 
             } else {
 
