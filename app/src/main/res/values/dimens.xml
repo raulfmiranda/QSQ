@@ -2,4 +2,5 @@
 <resources>
     <dimen name="margin_bottom_radio">2dp</dimen>
     <dimen name="text_size_pergunta">16sp</dimen>
+    <dimen name="padding">10dp</dimen>
 </resources>

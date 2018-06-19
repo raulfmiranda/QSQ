@@ -1,19 +1,15 @@
 package com.blogspot.raulfmiranda.qsq
 
-import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
-import android.text.Editable
 import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.WindowManager
 import android.widget.*
-import com.blogspot.raulfmiranda.qsq.R
 import com.blogspot.raulfmiranda.qsq.model.*
 import kotlinx.android.synthetic.main.activity_form.*
 import org.jetbrains.anko.alert
-import org.jetbrains.anko.share
 import org.jetbrains.anko.startActivity
 
 class FormActivity : AppCompatActivity() {
@@ -25,6 +21,7 @@ class FormActivity : AppCompatActivity() {
 
     companion object {
         val EXTRA_NOME_PACIENTE = "nomepaciente"
+        val EXTRA_PESQUISA = "PESQUISA"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,11 +30,22 @@ class FormActivity : AppCompatActivity() {
 
         txtPergunta.movementMethod = ScrollingMovementMethod()
         supportActionBar?.title = "QSQ - Questionário"
+
         nomePaciente = intent.getStringExtra(EXTRA_NOME_PACIENTE)
 
+        if(nomePaciente.isNullOrBlank())
+            nomePaciente = "Anônimo"
+
+        pesquisa = intent?.extras?.get(EXTRA_PESQUISA) as? Pesquisa
+
         questionarioAtual = criarNovoQuestionario()
-        questionarioContador = criarQuestionarioContador(questionarioAtual!!)
-        pesquisa = Pesquisa(mutableListOf<Questionario>(), questionarioContador!!)
+
+        if(pesquisa == null) {
+            questionarioContador = criarQuestionarioContador(questionarioAtual!!)
+            pesquisa = Pesquisa(mutableListOf<Questionario>(), questionarioContador!!)
+        } else {
+            questionarioContador = pesquisa?.questionarioContador
+        }
 
         questionarioAtual?.let {
             carregaQuestaoNaTela(it.questoes[0])
@@ -156,7 +164,7 @@ class FormActivity : AppCompatActivity() {
                             carregaQuestaoNaTela(questionarioAtual.questoes[s])
                         }
                         else {
-                            btnProx.isClickable = false
+//                            btnProx.isClickable = false
                             pesquisa?.questionarios?.add(questionarioAtual)
                             showEndAlert()
                         }
@@ -242,15 +250,17 @@ class FormActivity : AppCompatActivity() {
         builder.setMessage("Deseja finalizar a pesquisa, realizar novo questionário ou compartilhar o questionário que acabou de ser finalizado (Resultado Individual)?")
 
         builder.setPositiveButton("Finalizar Pesquisa") {dialog, which ->
-            val intent = Intent(context, PesquisaActivity::class.java)
-            intent.putExtra(PesquisaActivity.EXTRA_PESQUISA, pesquisa)
-            startActivity(intent)
+            startActivity<PesquisaActivity>(PesquisaActivity.EXTRA_PESQUISA to pesquisa)
+//            val intent = Intent(context, PesquisaActivity::class.java)
+//            intent.putExtra(PesquisaActivity.EXTRA_PESQUISA, pesquisa)
+//            startActivity(intent)
         }
         builder.setNegativeButton("Novo Questionário") {dialog, which ->
-            Toast.makeText(this, "Novo Questionário Gerado", Toast.LENGTH_SHORT).show()
-            btnProx.isClickable = true
-            questionarioAtual = criarNovoQuestionario()
-            carregaQuestaoNaTela(questionarioAtual!!.questoes[0])
+            startActivity<StartActivity>(StartActivity.EXTRA_PESQUISA to pesquisa)
+//            Toast.makeText(this, "Novo Questionário Gerado", Toast.LENGTH_SHORT).show()
+//            btnProx.isClickable = true
+//            questionarioAtual = criarNovoQuestionario()
+//            carregaQuestaoNaTela(questionarioAtual!!.questoes[0])
         }
         builder.setNeutralButton("Resultado Individual") {dialog, which ->
             startActivity<QuestionarioActivity>()
