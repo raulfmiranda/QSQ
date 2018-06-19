@@ -11,9 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:windowSoftInputMode="adjustPan"
             android:name=".FormActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".PesquisaActivity"
             android:screenOrientation="portrait" />
@@ -26,7 +26,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".FormActivity2"/>
+        <activity android:name=".FormActivity2" />
+        <activity android:name=".SetupActivity" />
+        <activity android:name=".QuestionarioActivity"></activity>
     </application>
 
 </manifest>

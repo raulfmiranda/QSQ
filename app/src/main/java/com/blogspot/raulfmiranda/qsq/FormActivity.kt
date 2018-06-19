@@ -13,12 +13,19 @@ import com.blogspot.raulfmiranda.qsq.R
 import com.blogspot.raulfmiranda.qsq.model.*
 import kotlinx.android.synthetic.main.activity_form.*
 import org.jetbrains.anko.alert
+import org.jetbrains.anko.share
+import org.jetbrains.anko.startActivity
 
 class FormActivity : AppCompatActivity() {
 
-    var questionarioAtual: Questionario = criarNovoQuestionario()
-    var questionarioContador: QuestionarioContador = criarQuestionarioContador(questionarioAtual)
-    var pesquisa: Pesquisa = Pesquisa(mutableListOf<Questionario>(), questionarioContador)
+    var questionarioAtual: Questionario? = null
+    var questionarioContador: QuestionarioContador? = null
+    var pesquisa: Pesquisa? = null
+    var nomePaciente: String = ""
+
+    companion object {
+        val EXTRA_NOME_PACIENTE = "nomepaciente"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,8 +33,15 @@ class FormActivity : AppCompatActivity() {
 
         txtPergunta.movementMethod = ScrollingMovementMethod()
         supportActionBar?.title = "QSQ - Questionário"
+        nomePaciente = intent.getStringExtra(EXTRA_NOME_PACIENTE)
 
-        carregaQuestaoNaTela(questionarioAtual.questoes[0])
+        questionarioAtual = criarNovoQuestionario()
+        questionarioContador = criarQuestionarioContador(questionarioAtual!!)
+        pesquisa = Pesquisa(mutableListOf<Questionario>(), questionarioContador!!)
+
+        questionarioAtual?.let {
+            carregaQuestaoNaTela(it.questoes[0])
+        }
 
 //        btnVoltar.setOnClickListener {
 //            radioGroup.clearCheck()
@@ -45,120 +59,126 @@ class FormActivity : AppCompatActivity() {
 
         btnProx.setOnClickListener {
             val rdId = radioGroup.checkedRadioButtonId
-            if(rdId != -1) {
-                var s = questionarioAtual.status
-                when(rdId) {
-                    R.id.rdResposta0 -> {
-                        questionarioAtual.questoes[s].respostaEscolhida = 0
 
-                        val key = questionarioAtual.questoes[s].respostas[0]
-                        var value = questionarioContador.questoesContadoras[s].respostasContadoras.getValue(key)
-                        value++
-                        questionarioContador.questoesContadoras[s].respostasContadoras.set(key, value)
+            questionarioAtual?.let { questionarioAtual ->
+                questionarioContador?.let { questionarioContador ->
+
+                    if(rdId != -1) {
+                        var s = questionarioAtual.status
+                        when(rdId) {
+                            R.id.rdResposta0 -> {
+                                questionarioAtual.questoes[s].respostaEscolhida = 0
+
+                                val key = questionarioAtual.questoes[s].respostas[0]
+                                var value = questionarioContador.questoesContadoras[s].respostasContadoras.getValue(key)
+                                value++
+                                questionarioContador.questoesContadoras[s].respostasContadoras.set(key, value)
+                            }
+                            R.id.rdResposta1 -> {
+                                questionarioAtual.questoes[s].respostaEscolhida = 1
+
+                                val key = questionarioAtual.questoes[s].respostas[1]
+                                var value = questionarioContador.questoesContadoras[s].respostasContadoras.getValue(key)
+                                value++
+                                questionarioContador.questoesContadoras[s].respostasContadoras.set(key, value)
+                            }
+                            R.id.rdResposta2 -> {
+                                questionarioAtual.questoes[s].respostaEscolhida = 2
+
+                                val key = questionarioAtual.questoes[s].respostas[2]
+                                var value = questionarioContador.questoesContadoras[s].respostasContadoras.getValue(key)
+                                value++
+                                questionarioContador.questoesContadoras[s].respostasContadoras.set(key, value)
+                            }
+                            R.id.rdResposta3 -> {
+                                questionarioAtual.questoes[s].respostaEscolhida = 3
+
+                                val key = questionarioAtual.questoes[s].respostas[3]
+                                var value = questionarioContador.questoesContadoras[s].respostasContadoras.getValue(key)
+                                value++
+                                questionarioContador.questoesContadoras[s].respostasContadoras.set(key, value)
+                            }
+                            R.id.rdResposta4 -> {
+                                questionarioAtual.questoes[s].respostaEscolhida = 4
+
+                                val key = questionarioAtual.questoes[s].respostas[4]
+                                var value = questionarioContador.questoesContadoras[s].respostasContadoras.getValue(key)
+                                value++
+                                questionarioContador.questoesContadoras[s].respostasContadoras.set(key, value)
+                            }
+                            R.id.rdResposta5 -> {
+                                questionarioAtual.questoes[s].respostaEscolhida = 5
+
+                                val key = questionarioAtual.questoes[s].respostas[5]
+                                var value = questionarioContador.questoesContadoras[s].respostasContadoras.getValue(key)
+                                value++
+                                questionarioContador.questoesContadoras[s].respostasContadoras.set(key, value)
+                            }
+                            R.id.rdResposta6 -> {
+                                questionarioAtual.questoes[s].respostaEscolhida = 6
+
+                                val key = questionarioAtual.questoes[s].respostas[6]
+                                var value = questionarioContador.questoesContadoras[s].respostasContadoras.getValue(key)
+                                value++
+                                questionarioContador.questoesContadoras[s].respostasContadoras.set(key, value)
+                            }
+                            R.id.rdResposta7 -> {
+                                questionarioAtual.questoes[s].respostaEscolhida = 7
+
+                                val key = questionarioAtual.questoes[s].respostas[7]
+                                var value = questionarioContador.questoesContadoras[s].respostasContadoras.getValue(key)
+                                value++
+                                questionarioContador.questoesContadoras[s].respostasContadoras.set(key, value)
+                            }
+                            R.id.rdResposta8 -> {
+                                questionarioAtual.questoes[s].respostaEscolhida = 8
+
+                                val key = questionarioAtual.questoes[s].respostas[8]
+                                var value = questionarioContador.questoesContadoras[s].respostasContadoras.getValue(key)
+                                value++
+                                questionarioContador.questoesContadoras[s].respostasContadoras.set(key, value)
+                            }
+                            R.id.rdResposta9 -> {
+                                questionarioAtual.questoes[s].respostaEscolhida = 9
+
+                                val key = questionarioAtual.questoes[s].respostas[9]
+                                var value = questionarioContador.questoesContadoras[s].respostasContadoras.getValue(key)
+                                value++
+                                questionarioContador.questoesContadoras[s].respostasContadoras.set(key, value)
+                            }
+                        }
+
+                        radioGroup.clearCheck()
+                        var questoesSize = questionarioAtual.questoes.size
+
+                        if(s < questoesSize - 1) {
+                            s = ++questionarioAtual.status
+                            carregaQuestaoNaTela(questionarioAtual.questoes[s])
+                        }
+                        else {
+                            btnProx.isClickable = false
+                            pesquisa?.questionarios?.add(questionarioAtual)
+                            showEndAlert()
+                        }
                     }
-                    R.id.rdResposta1 -> {
-                        questionarioAtual.questoes[s].respostaEscolhida = 1
-
-                        val key = questionarioAtual.questoes[s].respostas[1]
-                        var value = questionarioContador.questoesContadoras[s].respostasContadoras.getValue(key)
-                        value++
-                        questionarioContador.questoesContadoras[s].respostasContadoras.set(key, value)
-                    }
-                    R.id.rdResposta2 -> {
-                        questionarioAtual.questoes[s].respostaEscolhida = 2
-
-                        val key = questionarioAtual.questoes[s].respostas[2]
-                        var value = questionarioContador.questoesContadoras[s].respostasContadoras.getValue(key)
-                        value++
-                        questionarioContador.questoesContadoras[s].respostasContadoras.set(key, value)
-                    }
-                    R.id.rdResposta3 -> {
-                        questionarioAtual.questoes[s].respostaEscolhida = 3
-
-                        val key = questionarioAtual.questoes[s].respostas[3]
-                        var value = questionarioContador.questoesContadoras[s].respostasContadoras.getValue(key)
-                        value++
-                        questionarioContador.questoesContadoras[s].respostasContadoras.set(key, value)
-                    }
-                    R.id.rdResposta4 -> {
-                        questionarioAtual.questoes[s].respostaEscolhida = 4
-
-                        val key = questionarioAtual.questoes[s].respostas[4]
-                        var value = questionarioContador.questoesContadoras[s].respostasContadoras.getValue(key)
-                        value++
-                        questionarioContador.questoesContadoras[s].respostasContadoras.set(key, value)
-                    }
-                    R.id.rdResposta5 -> {
-                        questionarioAtual.questoes[s].respostaEscolhida = 5
-
-                        val key = questionarioAtual.questoes[s].respostas[5]
-                        var value = questionarioContador.questoesContadoras[s].respostasContadoras.getValue(key)
-                        value++
-                        questionarioContador.questoesContadoras[s].respostasContadoras.set(key, value)
-                    }
-                    R.id.rdResposta6 -> {
-                        questionarioAtual.questoes[s].respostaEscolhida = 6
-
-                        val key = questionarioAtual.questoes[s].respostas[6]
-                        var value = questionarioContador.questoesContadoras[s].respostasContadoras.getValue(key)
-                        value++
-                        questionarioContador.questoesContadoras[s].respostasContadoras.set(key, value)
-                    }
-                    R.id.rdResposta7 -> {
-                        questionarioAtual.questoes[s].respostaEscolhida = 7
-
-                        val key = questionarioAtual.questoes[s].respostas[7]
-                        var value = questionarioContador.questoesContadoras[s].respostasContadoras.getValue(key)
-                        value++
-                        questionarioContador.questoesContadoras[s].respostasContadoras.set(key, value)
-                    }
-                    R.id.rdResposta8 -> {
-                        questionarioAtual.questoes[s].respostaEscolhida = 8
-
-                        val key = questionarioAtual.questoes[s].respostas[8]
-                        var value = questionarioContador.questoesContadoras[s].respostasContadoras.getValue(key)
-                        value++
-                        questionarioContador.questoesContadoras[s].respostasContadoras.set(key, value)
-                    }
-                    R.id.rdResposta9 -> {
-                        questionarioAtual.questoes[s].respostaEscolhida = 9
-
-                        val key = questionarioAtual.questoes[s].respostas[9]
-                        var value = questionarioContador.questoesContadoras[s].respostasContadoras.getValue(key)
-                        value++
-                        questionarioContador.questoesContadoras[s].respostasContadoras.set(key, value)
+                    else {
+                        Toast.makeText(this, "Escolha uma opção.", Toast.LENGTH_SHORT).show()
                     }
                 }
-
-                radioGroup.clearCheck()
-                var questoesSize = questionarioAtual.questoes.size
-
-                if(s < questoesSize - 1) {
-                    s = ++questionarioAtual.status
-                    carregaQuestaoNaTela(questionarioAtual.questoes[s])
-                }
-                else {
-                    btnProx.isClickable = false
-                    pesquisa.questionarios.add(questionarioAtual)
-                    showEndAlert()
-                }
-            }
-            else {
-                Toast.makeText(this, "Escolha uma opção.", Toast.LENGTH_SHORT).show()
             }
 
             txtMostrarImg.setOnClickListener {
                 if(frameImg.visibility == FrameLayout.VISIBLE) {
-                    txtMostrarImg.setText("Mostrar imagem")
+                    txtMostrarImg.text = "Mostrar imagem"
                     frameImg.visibility = FrameLayout.GONE
                 } else {
                     frameImg.visibility = FrameLayout.VISIBLE
-                    txtMostrarImg.setText("Esconder imagem")
+                    txtMostrarImg.text = "Esconder imagem"
                 }
             }
 
             frameImg.setOnClickListener {
-                txtMostrarImg.setText("Mostrar imagem")
+                txtMostrarImg.text = "Mostrar imagem"
                 it.visibility = FrameLayout.GONE
             }
         }
@@ -207,7 +227,7 @@ class FormActivity : AppCompatActivity() {
 //            edtResposta.visibility = EditText.GONE
 //        }
 
-        if(questionarioAtual.status == 21) {
+        if(questionarioAtual?.status == 21) {
             txtMostrarImg.visibility = TextView.VISIBLE
         } else {
             txtMostrarImg.visibility = TextView.GONE
@@ -219,7 +239,7 @@ class FormActivity : AppCompatActivity() {
         val context = this@FormActivity
         val builder = AlertDialog.Builder(context)
         builder.setTitle("Questionário Finalizado")
-        builder.setMessage("Deseja realizar novo questionário ou finalizar a pesquisa?")
+        builder.setMessage("Deseja finalizar a pesquisa, realizar novo questionário ou compartilhar o questionário que acabou de ser finalizado (Resultado Individual)?")
 
         builder.setPositiveButton("Finalizar Pesquisa") {dialog, which ->
             val intent = Intent(context, PesquisaActivity::class.java)
@@ -230,8 +250,12 @@ class FormActivity : AppCompatActivity() {
             Toast.makeText(this, "Novo Questionário Gerado", Toast.LENGTH_SHORT).show()
             btnProx.isClickable = true
             questionarioAtual = criarNovoQuestionario()
-            carregaQuestaoNaTela(questionarioAtual.questoes[0])
+            carregaQuestaoNaTela(questionarioAtual!!.questoes[0])
         }
+        builder.setNeutralButton("Resultado Individual") {dialog, which ->
+            startActivity<QuestionarioActivity>()
+        }
+
         val dialog = builder.create()
         var window = dialog.window
         window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
@@ -383,7 +407,7 @@ class FormActivity : AppCompatActivity() {
         var r24 = mutableListOf("Positivo", "Negativo", "", "", "", "", "", "", "")
         val q24 = Questao("5.3. TIME GET UP AND GO (TUGT)  AVALIAÇÃO DE RISCO DE \nQUEDAS - O idoso deverá estar sentado em uma cadeira com \napoio lateral de braço. Solicite ao idoso, que se levante sem \napoiar nas laterais da cadeira, caminhe 3 metros, virando 180º e retornando ao ponto de partida, para sentar-se novamente.\n", r24, -1)
 
-        return Questionario(0, mutableListOf<Questao>(q0, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24))
+        return Questionario(0, mutableListOf<Questao>(q0, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24), nomePaciente)
     }
 
     fun criarQuestionarioContador(questionario: Questionario): QuestionarioContador {

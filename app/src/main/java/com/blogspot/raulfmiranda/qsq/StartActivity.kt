@@ -8,6 +8,8 @@ import org.jetbrains.anko.startActivity
 
 class StartActivity : AppCompatActivity() {
 
+    var nomePaciente: String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
@@ -15,7 +17,11 @@ class StartActivity : AppCompatActivity() {
         supportActionBar?.title = "Questionário de Saúde e Quedas"
 
         btnIniciar.setOnClickListener {
-            startActivity<FormActivity>()
+            if(!edtNomePaciente.text.isNullOrBlank())
+                nomePaciente = edtNomePaciente.text.toString()
+
+            startActivity<FormActivity>(FormActivity.EXTRA_NOME_PACIENTE to nomePaciente)
+//            startActivity<FormActivity>(FormActivity.EXTRA_NOME_PACIENTE to nomePaciente)
         }
 
     }
