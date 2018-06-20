@@ -412,13 +412,13 @@ class FormActivity : AppCompatActivity() {
         val q21 = Questao("4.2.1. Em relação à pior queda (consequência mais grave).\nOnde? Assinale o local (vide imagem).", r21, -1)
 
         var r22 = mutableListOf("Positivo", "Negativo", "", "", "", "", "", "", "")
-        val q22 = Questao("5.1. TESTE DE ROMBERG -  O médico orienta o paciente para que \npermaneça, por alguns segundos, em posição vertical, com os \npés juntos, inicialmente olhando para a frente.\nEm seguida, pede para que ele feche os olhos.\n• A prova de Romberg é positiva quando o paciente apresenta, \nentão, oscilações do corpo, com desequilíbrio e forte tendência à\n queda, que pode ser:\n- para qualquer lado e imediatamente após interromper a visão, \nindicando lesão das vias de sensibilidade proprioceptiva \nconsciente.\n- sempre para o mesmo lado após pequeno período de latência, \no que indica lesão do aparelho vestibular.\n• No indivíduo normal, nada é observado, mas em caso de labirintopatias, a prova de Romberg é positiva.\n", r22, -1)
+        val q22 = Questao("5.1. TESTE DE ROMBERG -  O médico orienta o paciente para que permaneça, por alguns segundos, em posição vertical, com os pés juntos, inicialmente olhando para a frente. Em seguida, pede para que ele feche os olhos.\n• A prova de Romberg é positiva quando o paciente apresenta, então, oscilações do corpo, com desequilíbrio e forte tendência à queda, que pode ser:\n- para qualquer lado e imediatamente após interromper a visão, indicando lesão das vias de sensibilidade proprioceptiva consciente.\n- sempre para o mesmo lado após pequeno período de latência, o que indica lesão do aparelho vestibular.\n• No indivíduo normal, nada é observado, mas em caso de labirintopatias, a prova de Romberg é positiva.", r22, -1)
 
         var r23 = mutableListOf("Positivo", "Negativo", "", "", "", "", "", "", "")
-        val q23 = Questao("5.2. Teste de Unterberger-FUKUDA -  paciente marcha parado no \nmesmo lugar de olhos fechados. Observa-se a rotação para o lado \nhipoativo se houver lesão vestibular unilateral.", r23, -1)
+        val q23 = Questao("5.2. Teste de Unterberger-FUKUDA -  paciente marcha parado no mesmo lugar de olhos fechados. Observa-se a rotação para o lado hipoativo se houver lesão vestibular unilateral.", r23, -1)
 
         var r24 = mutableListOf("Positivo", "Negativo", "", "", "", "", "", "", "")
-        val q24 = Questao("5.3. TIME GET UP AND GO (TUGT)  AVALIAÇÃO DE RISCO DE \nQUEDAS - O idoso deverá estar sentado em uma cadeira com \napoio lateral de braço. Solicite ao idoso, que se levante sem \napoiar nas laterais da cadeira, caminhe 3 metros, virando 180º e retornando ao ponto de partida, para sentar-se novamente.\n", r24, -1)
+        val q24 = Questao("5.3. TIME GET UP AND GO (TUGT)  AVALIAÇÃO DE RISCO DE QUEDAS - O idoso deverá estar sentado em uma cadeira com apoio lateral de braço. Solicite ao idoso, que se levante sem apoiar nas laterais da cadeira, caminhe 3 metros, virando 180º e retornando ao ponto de partida, para sentar-se novamente.", r24, -1)
 
         return Questionario(0, mutableListOf<Questao>(q0, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24), nomePaciente)
     }

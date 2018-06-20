@@ -78,7 +78,10 @@ class PesquisaActivity : AppCompatActivity() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
 //        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
-            Util.WRITE_EXTERNAL_STORAGE_CODE -> Util.gerarPdf(this@PesquisaActivity, txtResumo.text.toString(), relatorioPath, QTDE_PAGINAS)
+            Util.WRITE_EXTERNAL_STORAGE_CODE -> {
+//                Util.gerarPdf(this@PesquisaActivity, txtResumo.text.toString(), relatorioPath, QTDE_PAGINAS)
+                Util.gerarPdfiText(this@PesquisaActivity, txtResumo.text.toString(), relatorioPath)
+            }
             else -> {
                 Log.d("QSQ", "Usuario nao aceitou permissao?")
                 toast("Não foi possível gerar o PDF. É necessário permitir o acesso.")
