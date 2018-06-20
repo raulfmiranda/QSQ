@@ -29,8 +29,6 @@ class FormActivity : AppCompatActivity() {
         setContentView(R.layout.activity_form)
 
         txtPergunta.movementMethod = ScrollingMovementMethod()
-        supportActionBar?.title = "QSQ - Questionário"
-
         nomePaciente = intent.getStringExtra(EXTRA_NOME_PACIENTE)
 
         if(nomePaciente.isNullOrBlank())
@@ -48,7 +46,9 @@ class FormActivity : AppCompatActivity() {
         }
 
         questionarioAtual?.let {
-            carregaQuestaoNaTela(it.questoes[0])
+            val status = 0
+            carregaQuestaoNaTela(it.questoes[status])
+            setHeader(status)
         }
 
 //        btnVoltar.setOnClickListener {
@@ -162,6 +162,7 @@ class FormActivity : AppCompatActivity() {
                         if(s < questoesSize - 1) {
                             s = ++questionarioAtual.status
                             carregaQuestaoNaTela(questionarioAtual.questoes[s])
+                            setHeader(s)
                         }
                         else {
 //                            btnProx.isClickable = false
@@ -191,6 +192,18 @@ class FormActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    private fun setHeader(status: Int) {
+        var numQuestionario = 1
+        var numTotalQuest = 25
+
+        pesquisa?.let {
+            numTotalQuest = it.questionarioContador.questoesContadoras.size
+            numQuestionario += it.questionarios.size
+        }
+
+        supportActionBar?.title = "QSQ - ${numQuestionario}º Questionário (${status + 1}/$numTotalQuest)"
     }
 
     fun carregaQuestaoNaTela(questao: Questao) {
@@ -251,26 +264,16 @@ class FormActivity : AppCompatActivity() {
 
         builder.setPositiveButton("Finalizar Pesquisa") {dialog, which ->
             startActivity<PesquisaActivity>(PesquisaActivity.EXTRA_PESQUISA to pesquisa)
-//            val intent = Intent(context, PesquisaActivity::class.java)
-//            intent.putExtra(PesquisaActivity.EXTRA_PESQUISA, pesquisa)
-//            startActivity(intent)
         }
         builder.setNegativeButton("Novo Questionário") {dialog, which ->
             startActivity<StartActivity>(StartActivity.EXTRA_PESQUISA to pesquisa)
-//            Toast.makeText(this, "Novo Questionário Gerado", Toast.LENGTH_SHORT).show()
-//            btnProx.isClickable = true
-//            questionarioAtual = criarNovoQuestionario()
-//            carregaQuestaoNaTela(questionarioAtual!!.questoes[0])
         }
         builder.setNeutralButton("Resultado Individual") {dialog, which ->
-            startActivity<QuestionarioActivity>()
+            startActivity<QuestionarioActivity>(QuestionarioActivity.EXTRA_PESQUISA to pesquisa)
         }
 
         val dialog = builder.create()
-        var window = dialog.window
-        window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL)
-        window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+        Util.setFlagsNotTouchModal(dialog)
 
         dialog.show()
     }
@@ -437,24 +440,7 @@ class FormActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-//        super.onBackPressed()
-        alert("Deseja reiniciar o aplicativo?") {
-            positiveButton("Sim") {
-                finish()
-//                moveTaskToBack(true)
-//                android.os.Process.killProcess(android.os.Process.myPid())
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                    finishAndRemoveTask()
-//                }
-//                else {
-//                    android.os.Process.killProcess(android.os.Process.myPid())
-//                    moveTaskToBack(true)
-//                }
-            }
-            negativeButton("Não") {
-
-            }
-        }.show()
+        Util.onBackPressedAlert(this@FormActivity)
     }
 
 }

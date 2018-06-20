@@ -19,7 +19,6 @@ import android.os.StrictMode
 class PesquisaActivity : AppCompatActivity() {
 
     var pesquisa: Pesquisa = Pesquisa(mutableListOf<Questionario>(), QuestionarioContador(mutableListOf<QuestaoContadora>()))
-    val WRITE_EXTERNAL_STORAGE_CODE = 1
     val QTDE_PAGINAS = 8
 //    val relatorioPath = "/sdcard/QSQRel.pdf"
     val relatorioPath = Environment.getExternalStorageDirectory().path + "/QSQRel.pdf"
@@ -32,12 +31,7 @@ class PesquisaActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pesquisa)
 
-        // Para abrir o pdf API >= 24 (Nougat)
-        if(Build.VERSION.SDK_INT >= 24) {
-            // Por causa da exceção: android.os.FileUriExposedException: file:///sdcard/QSQRel.pdf exposed beyond app through Intent.getData()
-            val builder = StrictMode.VmPolicy.Builder()
-            StrictMode.setVmPolicy(builder.build())
-        }
+        Util.strictModeSetVmPolicy()
 
         val titulo = "Dados Estatísticos da Pesquisa"
         supportActionBar?.title = titulo
@@ -84,7 +78,7 @@ class PesquisaActivity : AppCompatActivity() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
 //        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
-            WRITE_EXTERNAL_STORAGE_CODE -> Util.gerarPdf(this@PesquisaActivity, txtResumo.text.toString(), relatorioPath, QTDE_PAGINAS)
+            Util.WRITE_EXTERNAL_STORAGE_CODE -> Util.gerarPdf(this@PesquisaActivity, txtResumo.text.toString(), relatorioPath, QTDE_PAGINAS)
             else -> {
                 Log.d("QSQ", "Usuario nao aceitou permissao?")
                 toast("Não foi possível gerar o PDF. É necessário permitir o acesso.")
@@ -93,23 +87,6 @@ class PesquisaActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-//        super.onBackPressed()
-        alert("Deseja fechar o aplicativo?") {
-            positiveButton("Sim") {
-                finishAffinity()
-//                moveTaskToBack(true)
-//                android.os.Process.killProcess(android.os.Process.myPid())
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                    finishAndRemoveTask()
-//                }
-//                else {
-//                    android.os.Process.killProcess(android.os.Process.myPid())
-//                    moveTaskToBack(true)
-//                }
-            }
-            negativeButton("Não") {
-
-            }
-        }.show()
+        Util.onBackPressedAlert(this@PesquisaActivity)
     }
 }

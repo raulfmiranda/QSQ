@@ -2,6 +2,7 @@ package com.blogspot.raulfmiranda.qsq
 
 import android.Manifest
 import android.app.Activity
+import android.support.v7.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -10,13 +11,17 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.pdf.PdfDocument
 import android.net.Uri
+import android.os.Build
+import android.os.StrictMode
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.text.Layout
 import android.text.StaticLayout
 import android.text.TextPaint
+import android.view.WindowManager
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_pesquisa.*
+import org.jetbrains.anko.alert
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -24,6 +29,31 @@ import java.io.IOException
 class Util {
     companion object {
         val WRITE_EXTERNAL_STORAGE_CODE = 1
+
+        // Impedir que o dialog seja fechado caso clique fora dele
+        fun setFlagsNotTouchModal(dialog: AlertDialog) {
+            val window = dialog.window
+            window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL)
+            window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+        }
+
+        fun strictModeSetVmPolicy() {
+            if(Build.VERSION.SDK_INT >= 24) {
+                // Por causa da exceção: android.os.FileUriExposedException: file:///sdcard/QSQRel.pdf exposed beyond app through Intent.getData()
+                val builder = StrictMode.VmPolicy.Builder()
+                StrictMode.setVmPolicy(builder.build())
+            }
+        }
+
+        fun onBackPressedAlert(activity: Activity) {
+            activity.alert("Deseja fechar o aplicativo?") {
+                positiveButton("Sim") {
+                    activity.finishAffinity()
+                }
+                negativeButton("Não") { }
+            }.show()
+        }
 
         fun gerarPdf(context: Context, texto: String, path: String, qtdePaginas: Int) {
             var document = PdfDocument()
