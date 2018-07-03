@@ -18,9 +18,13 @@ class FormActivity : AppCompatActivity() {
     var questionarioContador: QuestionarioContador? = null
     var pesquisa: Pesquisa? = null
     var nomePaciente: String = ""
+    var localPesquisa: String = ""
+    var idadePaciente: String = ""
 
     companion object {
         val EXTRA_NOME_PACIENTE = "nomepaciente"
+        val EXTRA_LOCAL_PESQUISA = "localpesquisa"
+        val EXTRA_IDADE_PACIENTE = "idadepaciente"
         val EXTRA_PESQUISA = "PESQUISA"
     }
 
@@ -30,9 +34,17 @@ class FormActivity : AppCompatActivity() {
 
         txtPergunta.movementMethod = ScrollingMovementMethod()
         nomePaciente = intent.getStringExtra(EXTRA_NOME_PACIENTE)
+        localPesquisa = intent.getStringExtra(EXTRA_LOCAL_PESQUISA)
+        idadePaciente = intent.getStringExtra(EXTRA_IDADE_PACIENTE)
 
         if(nomePaciente.isNullOrBlank())
             nomePaciente = "Anônimo"
+
+        if(localPesquisa.isNullOrBlank())
+            localPesquisa = "Não informado"
+
+        if(idadePaciente.isNullOrBlank())
+            idadePaciente = "Não informada"
 
         pesquisa = intent?.extras?.get(EXTRA_PESQUISA) as? Pesquisa
 
@@ -420,7 +432,7 @@ class FormActivity : AppCompatActivity() {
         var r24 = mutableListOf("Positivo", "Negativo", "", "", "", "", "", "", "")
         val q24 = Questao("5.3. TIME GET UP AND GO (TUGT)  AVALIAÇÃO DE RISCO DE QUEDAS - O idoso deverá estar sentado em uma cadeira com apoio lateral de braço. Solicite ao idoso, que se levante sem apoiar nas laterais da cadeira, caminhe 3 metros, virando 180º e retornando ao ponto de partida, para sentar-se novamente.", r24, -1)
 
-        return Questionario(0, mutableListOf<Questao>(q0, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24), nomePaciente)
+        return Questionario(0, mutableListOf<Questao>(q0, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24), nomePaciente, localPesquisa, idadePaciente)
     }
 
     fun criarQuestionarioContador(questionario: Questionario): QuestionarioContador {

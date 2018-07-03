@@ -14,6 +14,8 @@ class StartActivity : AppCompatActivity() {
 
     var pesquisa: Pesquisa? = null
     var nomePaciente: String = ""
+    var localPesquisa: String = ""
+    var idadePaciente: String = ""
 
     companion object {
         val EXTRA_PESQUISA = "PESQUISA"
@@ -31,8 +33,16 @@ class StartActivity : AppCompatActivity() {
             if(!edtNomePaciente.text.isNullOrBlank())
                 nomePaciente = edtNomePaciente.text.toString()
 
+            if(!edtLocal.text.isNullOrBlank())
+                localPesquisa = edtLocal.text.toString()
+
+            if(!edtIdade.text.isNullOrBlank())
+                idadePaciente = edtIdade.text.toString()
+
             startActivity<FormActivity>(
                     FormActivity.EXTRA_NOME_PACIENTE to nomePaciente,
+                    FormActivity.EXTRA_LOCAL_PESQUISA to localPesquisa,
+                    FormActivity.EXTRA_IDADE_PACIENTE to idadePaciente,
                     FormActivity.EXTRA_PESQUISA to pesquisa)
         }
 

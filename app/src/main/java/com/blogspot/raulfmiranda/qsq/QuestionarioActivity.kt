@@ -9,12 +9,15 @@ import com.blogspot.raulfmiranda.qsq.model.Questionario
 import kotlinx.android.synthetic.main.activity_questionario.*
 import org.jetbrains.anko.share
 import org.jetbrains.anko.startActivity
+import java.text.SimpleDateFormat
+import java.util.*
 
 class QuestionarioActivity : AppCompatActivity() {
 
     var pesquisa: Pesquisa? = null
     val QTDE_PAGINAS = 5
-    val relatorioPath = Environment.getExternalStorageDirectory().path + "/QSQRelIndividual.pdf"
+//    var relatorioPath = Environment.getExternalStorageDirectory().path + "/QSQRelIndividual.pdf"
+    var relatorioPath = Environment.getExternalStorageDirectory().path
 
     companion object {
         val EXTRA_PESQUISA = "PESQUISA"
@@ -29,15 +32,26 @@ class QuestionarioActivity : AppCompatActivity() {
         val titulo = "QSQ - Resultado Individual"
         supportActionBar?.title = titulo
 
+        val sdfFileName = SimpleDateFormat("dd-MM-yyyy_hh-mm", Locale.ITALY)
+        val dateFileName = sdfFileName.format(Date())
+        relatorioPath += "/QSQIndiv_${dateFileName}.pdf"
+
         pesquisa = intent?.extras?.get(StartActivity.EXTRA_PESQUISA) as? Pesquisa
         val questionarioAtual = pesquisa?.questionarios?.last()
         var txtResumo = ""
 
         questionarioAtual?.let {
-            txtResumo = "Nome do Paciente: ${it.nomePaciente}\n\n"
+
+            val sdf = SimpleDateFormat("dd/MM/yyyy hh:mm", Locale.ITALY)
+            val currentDate = sdf.format(Date())
+
+            txtResumo = " Data: ${currentDate}\n"
+            txtResumo += " Nome do Paciente: ${it.nomePaciente}\n"
+            txtResumo += " Idade do Paciente: ${it.idadePaciente}\n"
+            txtResumo += " Local da Pesquisa: ${it.localPesquisa}\n\n"
             it.questoes.forEach {
-                txtResumo += "${it.pergunta}\n"
-                txtResumo += "Resposta: ${it.respostas[it.respostaEscolhida]}\n\n"
+                txtResumo += " \n ${it.pergunta}\n"
+                txtResumo += " Resposta: ${it.respostas[it.respostaEscolhida]}\n"
             }
             txtResumoIndividual.text = txtResumo
         }

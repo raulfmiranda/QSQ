@@ -14,6 +14,8 @@ import com.blogspot.raulfmiranda.qsq.model.QuestaoContadora
 import com.blogspot.raulfmiranda.qsq.model.QuestionarioContador
 import org.jetbrains.anko.*
 import android.os.StrictMode
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class PesquisaActivity : AppCompatActivity() {
@@ -21,7 +23,8 @@ class PesquisaActivity : AppCompatActivity() {
     var pesquisa: Pesquisa = Pesquisa(mutableListOf<Questionario>(), QuestionarioContador(mutableListOf<QuestaoContadora>()))
     val QTDE_PAGINAS = 8
 //    val relatorioPath = "/sdcard/QSQRel.pdf"
-    val relatorioPath = Environment.getExternalStorageDirectory().path + "/QSQRel.pdf"
+//    val relatorioPath = Environment.getExternalStorageDirectory().path + "/QSQRel.pdf"
+    var relatorioPath = Environment.getExternalStorageDirectory().path
 
     companion object {
         val EXTRA_PESQUISA = "PESQUISA"
@@ -35,6 +38,10 @@ class PesquisaActivity : AppCompatActivity() {
 
         val titulo = "Dados Estatísticos da Pesquisa"
         supportActionBar?.title = titulo
+
+        val sdfFileName = SimpleDateFormat("dd-MM-yyyy_hh-mm", Locale.ITALY)
+        val dateFileName = sdfFileName.format(Date())
+        relatorioPath += "/QSQPesq_${dateFileName}.pdf"
 
         pesquisa = intent.extras.get(EXTRA_PESQUISA) as Pesquisa
 
@@ -61,7 +68,7 @@ class PesquisaActivity : AppCompatActivity() {
 
         for(qc in questoesContadoras) {
             val perg = qc.pergunta
-            resumo = resumo + "\n\n $perg\n"
+            resumo = resumo + "\n \n $perg\n"
             for(resp in qc.respostasContadoras) {
                 val key = resp.key
                 if(!key.isNullOrBlank()) {

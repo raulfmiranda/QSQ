@@ -106,8 +106,17 @@ class Util {
             document.add(Paragraph(""))
 
             var lines = texto.lines()
-            lines.forEach {
-                var line = Chunk(it)
+            val iHeader = if (context is QuestionarioActivity) 4 else 3
+
+            for (i in lines.indices) {
+
+                if(i == iHeader) {
+                    document.add(Paragraph(""))
+                    document.add(Chunk(lineSeparator))
+                    document.add(Paragraph(""))
+                }
+
+                var line = Chunk(lines[i])
                 var parag = Paragraph(line)
                 document.add(parag)
             }

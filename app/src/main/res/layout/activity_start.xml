@@ -39,7 +39,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtNomePaciente" />
+        app:layout_constraintTop_toBottomOf="@+id/txtIdade" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -52,27 +52,54 @@
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/pessoa_idosa_48" />
 
-    <TextView
-        android:id="@+id/txtNomePaciente"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:text="Digite o nome do paciente:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtLogo" />
-
     <EditText
         android:id="@+id/edtNomePaciente"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Nome do Paciente (opcional)"
+        android:hint="Nome do Paciente"
+        android:inputType="textPersonName|textCapWords"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtNomePaciente" />
+        app:layout_constraintTop_toBottomOf="@+id/txtLogo" />
+
+    <EditText
+        android:id="@+id/edtLocal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Local da Pesquisa"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtNomePaciente" />
+
+    <TextView
+        android:id="@+id/txtIdade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Idade do paciente:"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtLocal" />
+
+    <EditText
+        android:id="@+id/edtIdade"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="number"
+        android:maxLength="3"
+        app:layout_constraintStart_toEndOf="@+id/txtIdade"
+        app:layout_constraintTop_toBottomOf="@+id/edtLocal" />
 </android.support.constraint.ConstraintLayout>
